@@ -61,7 +61,7 @@ All registration CTAs will then point to it. The same file also contains the dat
 
 - `DESIGN.md` documents the current **Midnight Commons** visual system and its guardrails.
 - `.impeccable/design.json` contains machine-readable extensions for motion, breakpoints, depth, and narrative rules.
-- `src/styles/14-production-system.css` is the final production override layer for responsive behavior, accessibility, typography, and motion hierarchy.
+- `src/styles/14-production-system.css` is the final production layer for responsive behavior, accessibility, typography, and motion hierarchy.
 
 When changing the UI, preserve the core design rule: **hero = spectacle, content = calm, real interactions = tactile**.
 
@@ -69,12 +69,12 @@ When changing the UI, preserve the core design rule: **hero = spectacle, content
 
 - `src/styles.css` — stylesheet entry point.
 - `src/styles/` — layout, colors, hero, section, interaction, and responsive styles.
-- `public/hero-bg/` — the flower-valley hero image stored as base64 payload chunks.
-- `public/hero-landscape.svg` — lightweight illustrated fallback while the hero image loads.
+- `public/hero-background.webp` — canonical high-resolution flower-valley hero banner. Replace this file to change the hero artwork.
+- `public/hero-landscape.svg` — lightweight illustrated fallback/reference artwork.
 - `public/favicon.svg` — site favicon.
 - `public/og.svg` — social preview artwork.
 
-The hero payload is assembled by `src/main.tsx` in the browser and assigned to the `--hero-bg-image` CSS variable. The production stylesheet uses that variable as the source of truth, with `public/hero-landscape.svg` as a fallback if the custom payload cannot load.
+The hero uses `public/hero-background.webp` directly and preloads it from `index.html`. Do not re-encode or inline a compressed hero copy into JavaScript/CSS; the WebP file in `public/` is the source of truth.
 
 ## Accessibility and motion
 
