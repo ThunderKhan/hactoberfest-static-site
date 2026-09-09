@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-09T14:37:00Z",
+  "title": "Design System: Hacktoberfest Hack Day × DDUGU",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Midnight",
+        "canonical": "#07080d",
+        "tonalRamp": ["#030409", "#07080d", "#0d1018", "#111622"]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Warm Cream",
+        "canonical": "#fff7e6",
+        "tonalRamp": ["rgba(255,247,230,.52)", "rgba(255,247,230,.66)", "#fff7e6"]
+      },
+      "gold": {
+        "role": "primary",
+        "displayName": "Hacktober Gold",
+        "canonical": "#f0c641",
+        "tonalRamp": ["rgba(240,198,65,.12)", "rgba(240,198,65,.32)", "#f0c641", "#ffd529"]
+      },
+      "navy": {
+        "role": "secondary",
+        "displayName": "Deep Campus Navy",
+        "canonical": "#1017aa",
+        "tonalRamp": ["#080d2e", "#090e6f", "#1017aa"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Editorial Display",
+        "purpose": "Hero and major section statements only; Fraunces supplies the site's identity."
+      },
+      "body": {
+        "displayName": "Readable Sans",
+        "purpose": "Long-form event information and explanatory copy."
+      },
+      "label": {
+        "displayName": "Technical Metadata",
+        "purpose": "Times, categories, route labels, code, terminal chrome and compact status only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "nav-ambient",
+        "value": "0 18px 54px rgba(0,0,0,.22)",
+        "purpose": "Soft depth for the floating glass navigation without competing with the hero."
+      },
+      {
+        "name": "map-depth",
+        "value": "0 34px 82px rgba(0,0,0,.42)",
+        "purpose": "Signature depth for the interactive campus map."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-confident",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Fast, natural deceleration for control feedback."
+      },
+      {
+        "name": "feedback-fast",
+        "value": "180ms",
+        "purpose": "Button, FAQ and compact hover/focus feedback."
+      },
+      {
+        "name": "layout-medium",
+        "value": "350ms",
+        "purpose": "Campus-map state expansion on motion-enabled devices."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "100-120ms opacity/color state only",
+        "purpose": "Preserve state feedback while removing spatial tilt, drawing and pulse motion."
+      }
+    ],
+    "breakpoints": [
+      { "name": "very-narrow", "value": "420px", "purpose": "Single-column facts and tighter timeline geometry." },
+      { "name": "phone", "value": "560px", "purpose": "Compact hero, buttons and one-column build lanes." },
+      { "name": "tablet", "value": "860px", "purpose": "Collapse editorial two-column layouts and enable mobile navigation." },
+      { "name": "manifesto-collapse", "value": "900px", "purpose": "Simplify manifesto composition and hide its stamp." },
+      { "name": "wide-tablet", "value": "1100px", "purpose": "Move the four build lanes to a two-column grid." }
+    ],
+    "narrative": {
+      "northStar": "Midnight Commons",
+      "summary": "A cinematic university open-source gathering after dark: expressive at the hero, calm and editorial through the content, tactile only where interaction is real.",
+      "rules": [
+        "The photographic hero owns saturation and spectacle.",
+        "Gold is scarce and signals importance, focus or location.",
+        "Fraunces carries identity; DM Sans carries reading; DM Mono means code or metadata.",
+        "The map is the signature tactile object below the hero; informational cards stay stable.",
+        "Never imply a 24-hour event, guaranteed swag, sponsor support or registration before it is confirmed.",
+        "The floating navbar must visually recede into the hero rather than compete with it."
+      ],
+      "donts": [
+        "Do not reintroduce a top marquee or decorative hero corner slogans.",
+        "Do not use the same tilt/lift interaction on every surface.",
+        "Do not turn ordinary sections into card grids when editorial composition can carry the content.",
+        "Do not use hard offset shadows as the default depth language."
+      ]
+    }
+  }
+}
