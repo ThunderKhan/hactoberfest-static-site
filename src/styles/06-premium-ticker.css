@@ -51,8 +51,15 @@
   height: 100%;
   width: max-content;
   min-width: 100%;
-  animation: ticker 38s linear infinite;
+  animation: tickerMarquee 38s linear infinite;
   will-change: transform;
+}
+
+/* The track contains two identical copies of the event labels. Moving exactly
+   half of its full width creates a seamless loop back to the first copy. */
+@keyframes tickerMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 .ticker-track span {
