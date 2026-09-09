@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { EVENT, FAQS, PATHS, SCHEDULE, TICKER, TOOLKIT } from "./event";
+import { LocationMap } from "./components/LocationMap";
 
 function Spark({ size = 18 }: { size?: number }) {
   return (
@@ -261,13 +262,8 @@ function App() {
 
         <section className="section venue-section" id="venue">
           <div className="container venue-grid">
-            <div className="venue-map reveal">
-              <div className="map-grid" />
-              <div className="map-river" />
-              <div className="map-road road-a" /><div className="map-road road-b" /><div className="map-road road-c" />
-              <div className="map-pin"><BrandMark /></div>
-              <span className="map-label">IET · DDUGU</span>
-              <span className="map-caption">GORAKHPUR<br />26.7606° N</span>
+            <div className="venue-map-wrap reveal">
+              <LocationMap location="IET · DDUGU" coordinates="Civil Lines · Gorakhpur · Uttar Pradesh" />
             </div>
             <div className="venue-copy reveal">
               <div className="eyebrow"><Spark size={13} /> WHERE WE BUILD</div>

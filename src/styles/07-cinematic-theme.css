@@ -1,0 +1,595 @@
+/* Cinematic visual system — carries the hero mood through the entire page. */
+:root {
+  --cinema-bg: #07080d;
+  --cinema-panel: #0d1018;
+  --cinema-panel-2: #111622;
+  --cinema-line: rgba(255, 247, 230, .13);
+  --cinema-muted: rgba(255, 247, 230, .66);
+  --cinema-gold: #f0c641;
+}
+
+body {
+  background: var(--cinema-bg);
+  color: var(--cream);
+}
+
+/* HERO: preserve detail from the source artwork instead of hiding it. */
+.hero {
+  background: #030409;
+}
+
+.hero::before {
+  background:
+    linear-gradient(180deg, rgba(2, 3, 8, .05) 0%, rgba(2, 3, 8, .015) 34%, rgba(2, 3, 8, .08) 64%, rgba(2, 3, 8, .28) 100%),
+    radial-gradient(circle at 50% 42%, rgba(28, 31, 56, .02), rgba(0, 0, 0, .10) 82%);
+}
+
+.hero::after {
+  opacity: .08;
+  mix-blend-mode: soft-light;
+}
+
+.hero-landscape {
+  background-image: url('/hero-background.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: none;
+  filter: none;
+  image-rendering: auto;
+}
+
+.hero-title span {
+  text-shadow: 0 2px 11px rgba(0,0,0,.36);
+}
+
+.hero-copy {
+  color: rgba(255,247,230,.96);
+  text-shadow: 0 2px 12px rgba(0,0,0,.52);
+}
+
+.hero-pills span {
+  background: rgba(6, 8, 19, .52);
+  backdrop-filter: blur(9px);
+}
+
+/* Event facts become a dark bridge instead of a bright visual reset. */
+.fact-strip {
+  background: linear-gradient(90deg, #090b12 0%, #111424 50%, #090b12 100%);
+  color: var(--cream);
+  border-top: 1px solid rgba(240,198,65,.5);
+  border-bottom: 1px solid rgba(240,198,65,.38);
+}
+
+.fact-grid > div {
+  border-color: rgba(255,247,230,.12);
+}
+
+.fact-grid > div:first-child {
+  border-left-color: rgba(255,247,230,.12);
+}
+
+.fact-grid small,
+.fact-grid span {
+  color: rgba(255,247,230,.54);
+}
+
+.fact-grid strong {
+  color: var(--cinema-gold);
+}
+
+/* About */
+.cream-section {
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(104, 74, 34, .12), transparent 32%),
+    radial-gradient(circle at 83% 72%, rgba(53, 58, 87, .16), transparent 38%),
+    #090b10;
+  background-image:
+    radial-gradient(circle at 20% 18%, rgba(104, 74, 34, .12), transparent 32%),
+    radial-gradient(circle at 83% 72%, rgba(53, 58, 87, .16), transparent 38%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: auto, auto, 38px 38px, 38px 38px;
+}
+
+.cream-section .eyebrow,
+.editorial-copy h2 em {
+  color: var(--cinema-gold);
+}
+
+.editorial-body p {
+  color: var(--cinema-muted);
+}
+
+.editorial-body .lead {
+  color: var(--cream);
+}
+
+.inline-note {
+  color: rgba(255,247,230,.72);
+}
+
+.inline-note span {
+  color: var(--cream);
+  background: rgba(255,255,255,.045);
+  border-color: rgba(240,198,65,.55);
+  box-shadow: none;
+}
+
+.inline-note i {
+  background: rgba(240,198,65,.65);
+}
+
+.manifesto {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(90, 99, 164, .14), transparent 38%),
+    #0b0e17;
+  border-color: rgba(240,198,65,.62);
+  box-shadow: 12px 12px 0 rgba(240,198,65,.12);
+}
+
+.manifesto-number,
+.manifesto-text em,
+.manifesto-badge {
+  color: var(--cinema-gold);
+}
+
+/* Build paths */
+.blue-section {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(53, 62, 112, .28), transparent 45%),
+    linear-gradient(180deg, #0b0e18 0%, #090b12 100%);
+}
+
+.blue-section::before {
+  opacity: .16;
+}
+
+.path-grid {
+  border-color: var(--cinema-line);
+}
+
+.path-card {
+  background: linear-gradient(180deg, rgba(255,255,255,.034), rgba(255,255,255,.012));
+  border-right-color: var(--cinema-line);
+}
+
+.path-card p {
+  color: rgba(255,247,230,.62);
+}
+
+.path-card:hover {
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 75% 18%, rgba(240,198,65,.11), transparent 36%),
+    #111622;
+  box-shadow: inset 0 0 0 1px rgba(240,198,65,.32);
+}
+
+.path-card:hover p {
+  color: rgba(255,247,230,.72);
+}
+
+.path-card:hover .path-top span {
+  color: var(--cinema-gold);
+}
+
+/* Schedule */
+.schedule-section {
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 8% 24%, rgba(79, 56, 28, .11), transparent 28%),
+    #090b11;
+  border-color: rgba(255,247,230,.10);
+}
+
+.schedule-intro .eyebrow,
+.timeline-row time,
+.timeline-card small {
+  color: var(--cinema-gold);
+}
+
+.schedule-intro > p,
+.timeline-card p {
+  color: rgba(255,247,230,.62);
+}
+
+.schedule-stamp {
+  border-color: rgba(240,198,65,.72);
+  color: var(--cinema-gold);
+}
+
+.timeline::before {
+  background: rgba(240,198,65,.32);
+}
+
+.timeline-dot {
+  background: var(--cinema-gold);
+  border-color: #05060b;
+  box-shadow: 0 0 0 5px #090b11, 0 0 24px rgba(240,198,65,.16);
+}
+
+.timeline-card {
+  color: var(--cream);
+  border-color: rgba(255,247,230,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+  box-shadow: none;
+}
+
+.timeline-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(240,198,65,.48);
+  box-shadow: 0 18px 44px rgba(0,0,0,.24), inset 0 0 0 1px rgba(240,198,65,.08);
+}
+
+/* Toolkit */
+.toolkit-section {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(33, 40, 76, .25), transparent 34%),
+    #080a11;
+}
+
+.toolkit-console {
+  background: #05060b;
+  border-color: rgba(255,247,230,.12);
+  box-shadow: 12px 12px 0 rgba(240,198,65,.10);
+}
+
+.toolkit-console pre {
+  color: #d3ddcf;
+}
+
+.tool-list,
+.tool-row {
+  border-color: rgba(255,247,230,.11);
+}
+
+/* Rewards: gold becomes a glow, not a giant yellow wall. */
+.rewards-section {
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 18% 26%, rgba(126, 74, 34, .18), transparent 31%),
+    radial-gradient(circle at 78% 60%, rgba(44, 51, 87, .18), transparent 34%),
+    #0a0b10;
+  border-color: rgba(240,198,65,.20);
+}
+
+.rewards-word span,
+.rewards-word em {
+  color: var(--cinema-gold);
+}
+
+.rewards-copy > p:not(.lead),
+.rewards-copy small {
+  color: rgba(255,247,230,.62);
+}
+
+.reward-chips span {
+  color: var(--cream);
+  border-color: rgba(240,198,65,.32);
+  background: rgba(255,255,255,.035);
+}
+
+/* Venue */
+.venue-section {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(47, 57, 100, .22), transparent 32%),
+    radial-gradient(circle at 90% 78%, rgba(99, 61, 29, .12), transparent 30%),
+    #070910;
+}
+
+.venue-copy .eyebrow,
+.venue-copy h3 {
+  color: var(--cinema-gold);
+}
+
+.venue-copy > p {
+  color: rgba(255,247,230,.66);
+}
+
+.venue-map-wrap {
+  min-height: 500px;
+  display: grid;
+  place-items: center;
+}
+
+/* Interactive Framer Motion map adapted from the supplied component. */
+.location-map {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.location-map:focus-visible .location-map-card {
+  outline: 2px solid var(--cinema-gold);
+  outline-offset: 4px;
+}
+
+.location-map-card {
+  position: relative;
+  overflow: hidden;
+  max-width: 700px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,247,230,.13);
+  background:
+    linear-gradient(145deg, rgba(26, 31, 47, .96), rgba(8, 10, 17, .98));
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+.location-map-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(240,198,65,.11), transparent 30%),
+    radial-gradient(circle at 85% 82%, rgba(70, 88, 158, .13), transparent 34%);
+}
+
+.location-map-expanded {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(18,22,34,.45), rgba(7,9,15,.92)),
+    radial-gradient(circle at 50% 46%, rgba(65,76,118,.30), transparent 44%),
+    #12151e;
+}
+
+.location-map-roads {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.location-map-roads line {
+  vector-effect: non-scaling-stroke;
+}
+
+.location-map-roads .road-main {
+  stroke: rgba(255,247,230,.22);
+  stroke-width: 3.4;
+}
+
+.location-map-roads .road-mid {
+  stroke: rgba(255,247,230,.15);
+  stroke-width: 2.1;
+}
+
+.location-map-roads .road-minor {
+  stroke: rgba(255,247,230,.075);
+  stroke-width: 1.1;
+}
+
+.map-building {
+  position: absolute;
+  border: 1px solid rgba(255,247,230,.10);
+  background: rgba(255,247,230,.08);
+  border-radius: 4px;
+}
+
+.building-a { top: 40%; left: 10%; width: 15%; height: 20%; }
+.building-b { top: 15%; left: 35%; width: 12%; height: 15%; }
+.building-c { top: 70%; left: 75%; width: 18%; height: 18%; }
+.building-d { top: 20%; right: 10%; width: 10%; height: 25%; }
+.building-e { top: 55%; left: 5%; width: 8%; height: 12%; }
+
+.location-map-pin {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  color: var(--cinema-gold);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 18px rgba(240,198,65,.34));
+}
+
+.location-map-pin circle {
+  fill: #0a0c12;
+}
+
+.location-map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.location-map-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  pointer-events: none;
+}
+
+.location-map-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.location-map-icon {
+  color: var(--cinema-gold);
+}
+
+.location-map-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,247,230,.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,.035);
+  color: rgba(255,247,230,.60);
+  font: 500 9px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.location-map-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6ecf9d;
+  box-shadow: 0 0 10px rgba(110,207,157,.45);
+}
+
+.location-map-bottom h3 {
+  margin: 0;
+  max-width: 470px;
+  color: var(--cream);
+  font: 500 clamp(24px, 3vw, 38px)/1.02 var(--serif);
+  letter-spacing: -.035em;
+}
+
+.location-map-bottom p {
+  margin: 9px 0 0;
+  color: rgba(255,247,230,.52);
+  font: 400 11px/1.5 var(--mono);
+}
+
+.location-map-underline {
+  width: 100%;
+  height: 1px;
+  margin-top: 18px;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--cinema-gold), rgba(240,198,65,.14), transparent);
+}
+
+.location-map-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  margin: 0;
+  color: rgba(255,247,230,.43);
+  font: 400 9px/1 var(--mono);
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+
+/* FAQ */
+.faq-section {
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 86% 8%, rgba(43, 49, 82, .20), transparent 30%),
+    #090b10;
+}
+
+.faq-heading .eyebrow,
+.faq-item button > span,
+.faq-item button i {
+  color: var(--cinema-gold);
+}
+
+.faq-heading > p,
+.faq-answer p {
+  color: rgba(255,247,230,.60);
+}
+
+.faq-list,
+.faq-item {
+  border-color: rgba(255,247,230,.13);
+}
+
+.faq-item button {
+  color: var(--cream);
+}
+
+/* Register + footer */
+.register-section {
+  background:
+    radial-gradient(circle at 50% 0, rgba(57,65,111,.28) 0, transparent 46%),
+    #070910;
+  border-color: rgba(240,198,65,.18);
+}
+
+.register-section::before {
+  opacity: .22;
+}
+
+.footer {
+  color: var(--cream);
+  background: #05060a;
+  border-color: rgba(255,247,230,.10);
+}
+
+.footer-brand span,
+.footer p {
+  color: rgba(255,247,230,.48);
+}
+
+.footer-links a {
+  color: rgba(255,247,230,.72);
+}
+
+/* Bottom marquee now belongs to the same night palette. */
+.ticker {
+  background: #080a10;
+  color: var(--cream);
+  border-top-color: rgba(240,198,65,.38);
+  border-bottom-color: rgba(240,198,65,.22);
+}
+
+.ticker::before {
+  background: linear-gradient(90deg, #080a10 18%, rgba(8,10,16,0));
+}
+
+.ticker::after {
+  background: linear-gradient(270deg, #080a10 18%, rgba(8,10,16,0));
+}
+
+.ticker-track svg {
+  fill: var(--cinema-gold);
+}
+
+.top-button {
+  color: #090b10;
+  background: var(--cinema-gold);
+  border-color: #090b10;
+}
+
+@media (max-width: 860px) {
+  .location-map {
+    min-height: 430px;
+  }
+
+  .venue-map-wrap {
+    min-height: 450px;
+  }
+}
+
+@media (max-width: 560px) {
+  .location-map {
+    min-height: 390px;
+  }
+
+  .location-map-card {
+    border-radius: 20px;
+  }
+
+  .location-map-content {
+    padding: 19px;
+  }
+
+  .location-map-bottom h3 {
+    font-size: 27px;
+  }
+
+  .venue-map-wrap {
+    min-height: 410px;
+  }
+}
