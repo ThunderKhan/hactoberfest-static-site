@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { EVENT, FAQS, PATHS, SCHEDULE, TICKER, TOOLKIT } from "./event";
-import { InteractiveSurface } from "./components/InteractiveSurface";
 import { LocationMap } from "./components/LocationMap";
 
 const TERMINAL_SCRIPT = `# before you arrive
@@ -80,12 +79,33 @@ function SectionHead({ eyebrow, title, copy, light = false }: { eyebrow: string;
   );
 }
 
+function useReducedMotionPreference() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(media.matches);
+    sync();
+    media.addEventListener?.("change", sync);
+    return () => media.removeEventListener?.("change", sync);
+  }, []);
+
+  return reduced;
+}
+
 function TypewriterTerminal({ text, speed = 18, startDelay = 280 }: { text: string; speed?: number; startDelay?: number }) {
   const preRef = useRef<HTMLPreElement>(null);
+  const reducedMotion = useReducedMotionPreference();
   const [started, setStarted] = useState(false);
   const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
+    if (reducedMotion) {
+      setStarted(true);
+      setDisplayed(text);
+      return;
+    }
+
     if (!preRef.current || started) return;
     const node = preRef.current;
     const observer = new IntersectionObserver(
@@ -99,10 +119,10 @@ function TypewriterTerminal({ text, speed = 18, startDelay = 280 }: { text: stri
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [started]);
+  }, [reducedMotion, started, text]);
 
   useEffect(() => {
-    if (!started) return;
+    if (!started || reducedMotion) return;
     let cancelled = false;
     let index = 0;
     let timer = 0;
@@ -123,13 +143,16 @@ function TypewriterTerminal({ text, speed = 18, startDelay = 280 }: { text: stri
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [speed, startDelay, started, text]);
+  }, [reducedMotion, speed, startDelay, started, text]);
 
   return (
-    <pre ref={preRef} className={`terminal-typewriter${started ? " started" : ""}`} aria-live="polite">
-      {displayed}
-      <span className="terminal-cursor" aria-hidden="true" />
-    </pre>
+    <div className="terminal-output">
+      <pre ref={preRef} className={`terminal-typewriter${started ? " started" : ""}`} aria-hidden="true">
+        {displayed}
+        <span className="terminal-cursor" aria-hidden="true" />
+      </pre>
+      <span className="sr-only">{text}</span>
+    </div>
   );
 }
 
@@ -158,7 +181,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 750);
+    const onScroll = () => {
+      const next = window.scrollY > 750;
+      setShowTop(current => current === next ? current : next);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -166,6 +192,8 @@ function App() {
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+
       <div className="ticker" aria-label="Event highlights">
         <div className="ticker-track">
           {doubledTicker.map((item, i) => (
@@ -174,7 +202,7 @@ function App() {
         </div>
       </div>
 
-      <nav className="navbar">
+      <nav className="navbar" aria-label="Primary navigation">
         <div className="nav-inner">
           <a href="#top" className="brand" aria-label="Hacktoberfest DDUGU home">
             <BrandMark />
@@ -191,26 +219,26 @@ function App() {
 
           <div className="nav-actions">
             <div className="desktop-register"><RegistrationButton nav /></div>
-            <button className={`menu-button${menuOpen ? " active" : ""}`} onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu" aria-expanded={menuOpen}>
+            <button className={`menu-button${menuOpen ? " active" : ""}`} onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu" aria-expanded={menuOpen} aria-controls="mobile-navigation">
               <span /><span />
             </button>
           </div>
         </div>
-        <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
+        <div id="mobile-navigation" className={`mobile-menu${menuOpen ? " open" : ""}`}>
           {["about", "schedule", "paths", "venue", "faq", "register"].map(id => (
             <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{id === "paths" ? "Build paths" : id[0].toUpperCase() + id.slice(1)}</a>
           ))}
         </div>
       </nav>
 
-      <main>
+      <main id="main-content">
         <section className="hero" id="top">
           <HeroLandscape />
           <div className="hero-content container">
             <div className="hero-pills reveal visible">
               <span>IN PERSON</span><span>DDUGU</span><span>OCTOBER 2026</span>
             </div>
-            <p className="hero-kicker reveal visible">Open source starts here <i /></p>
+            <p className="hero-kicker reveal visible">Open source starts here</p>
             <h1 className="hero-title reveal visible">
               <span>Hacktoberfest</span>
               <em>Hack Day × DDUGU</em>
@@ -225,12 +253,12 @@ function App() {
           </div>
         </section>
 
-        <section className="fact-strip">
+        <section className="fact-strip" aria-label="Event facts">
           <div className="container fact-grid reveal">
-            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></InteractiveSurface>
-            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHEN</small><strong>OCT 2026</strong><span>Exact date TBA</span></InteractiveSurface>
-            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></InteractiveSurface>
-            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></InteractiveSurface>
+            <div className="fact-cell"><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></div>
+            <div className="fact-cell"><small>WHEN</small><strong>OCT 2026</strong><span>Exact date TBA</span></div>
+            <div className="fact-cell"><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></div>
+            <div className="fact-cell"><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></div>
           </div>
         </section>
 
@@ -248,14 +276,14 @@ function App() {
           </div>
 
           <div className="container reveal manifesto-wrap">
-            <InteractiveSurface className="manifesto" strength={2.5} lift={5}>
+            <div className="manifesto">
               <div className="manifesto-number">01</div>
               <div className="manifesto-text">
                 <small>THE BRIEF</small>
                 <p>Build something <em>open enough to learn from</em> and useful enough that somebody else would want to try it.</p>
               </div>
               <div className="manifesto-badge">BUILD<br />IN PUBLIC</div>
-            </InteractiveSurface>
+            </div>
           </div>
         </section>
 
@@ -264,12 +292,11 @@ function App() {
             <SectionHead light eyebrow="CHOOSE YOUR LANE" title="Four ways to have a good Hack Day." copy="You do not have to fit a single hackathon stereotype. Pick the lane that gives you the most learning per hour." />
             <div className="path-grid">
               {PATHS.map(path => (
-                <InteractiveSurface className="path-card" strength={5} lift={10} key={path.index}>
+                <article className="path-card" key={path.index}>
                   <div className="path-top"><span>{path.index}</span><b>{path.tag}</b></div>
                   <h3>{path.title}</h3>
                   <p>{path.copy}</p>
-                  <div className="path-arrow"><Arrow direction="up-right" /></div>
-                </InteractiveSurface>
+                </article>
               ))}
             </div>
           </div>
@@ -281,18 +308,17 @@ function App() {
               <div className="eyebrow"><Spark size={13} /> THE DAY, AT A GLANCE</div>
               <h2>Enough structure to move. Enough space to build.</h2>
               <p>Times below are a planning draft until the final event date is locked. The rhythm is intentional: short talks, long build blocks.</p>
-              <div className="schedule-stamp">24-ish<br /><span>HUMAN HOURS</span></div>
             </div>
             <div className="timeline">
               {SCHEDULE.map((item, i) => (
                 <article className="timeline-row reveal" style={{ "--delay": `${i * 55}ms` } as CSSProperties} key={item.time + item.title}>
                   <time>{item.time}</time>
-                  <div className="timeline-dot" />
-                  <InteractiveSurface className="timeline-card" strength={3.5} lift={6}>
+                  <div className="timeline-dot" aria-hidden="true" />
+                  <div className="timeline-card">
                     <small>{item.eyebrow}</small>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
-                  </InteractiveSurface>
+                  </div>
                 </article>
               ))}
             </div>
@@ -302,10 +328,10 @@ function App() {
         <section className="section toolkit-section" id="toolkit">
           <div className="container toolkit-layout">
             <div className="reveal">
-              <InteractiveSurface className="toolkit-console" strength={3} lift={7} ariaLabel="Open source starter checklist">
+              <div className="toolkit-console" aria-label="Open source starter checklist">
                 <div className="console-bar"><span /><span /><span /><b>starter-kit.md</b></div>
                 <TypewriterTerminal text={TERMINAL_SCRIPT} />
-              </InteractiveSurface>
+              </div>
             </div>
             <div className="toolkit-copy reveal">
               <div className="eyebrow"><Spark size={13} /> STARTER KIT</div>
@@ -323,13 +349,11 @@ function App() {
         <section className="section rewards-section" id="swag">
           <div className="container rewards-grid">
             <div className="rewards-word reveal"><span>SWAG</span><em>&</em><span>REWARDS</span></div>
-            <div className="reveal">
-              <InteractiveSurface className="rewards-copy rewards-panel" strength={2.5} lift={5}>
-                <p className="lead">Fun stuff, without fake promises.</p>
-                <p>Official Hacktoberfest event swag and partner rewards may be available, but quantities depend on the allocation received. The website will only promise what is actually locked.</p>
-                <div className="reward-chips"><span>EVENT SWAG*</span><span>PROJECT RECOGNITION</span><span>COMMUNITY</span><span>REAL DEMO</span></div>
-                <small>*Subject to organizer allocation and on-site availability.</small>
-              </InteractiveSurface>
+            <div className="reveal rewards-copy rewards-panel">
+              <p className="lead">Fun stuff, without fake promises.</p>
+              <p>Official Hacktoberfest event swag and partner rewards may be available, but quantities depend on the allocation received. The website will only promise what is actually locked.</p>
+              <div className="reward-chips"><span>EVENT SWAG*</span><span>PROJECT RECOGNITION</span><span>COMMUNITY</span><span>REAL DEMO</span></div>
+              <small>*Subject to organizer allocation and on-site availability.</small>
             </div>
           </div>
         </section>
@@ -373,7 +397,7 @@ function App() {
         <section className="section register-section" id="register">
           <div className="register-stars" aria-hidden="true"><Spark size={28} /><Spark size={15} /><Spark size={20} /></div>
           <div className="container register-inner reveal">
-            <p className="hero-kicker">Your first contribution can start here <i /></p>
+            <p className="hero-kicker">Your first contribution can start here</p>
             <h2>Hacktoberfest<br /><em>Hack Day × DDUGU</em></h2>
             <p>{EVENT.date} · {EVENT.dateDetail}<br />{EVENT.venue}</p>
             <RegistrationButton />
