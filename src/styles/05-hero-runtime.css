@@ -1,7 +1,7 @@
 :root {
-  --hero-bg-image: url('/hero-landscape.svg');
+  --hero-bg-fallback: url('/hero-landscape.svg');
 }
 
 .hero-landscape {
-  background-image: var(--hero-bg-image);
+  background-image: var(--hero-bg-image, var(--hero-bg-fallback));
 }
