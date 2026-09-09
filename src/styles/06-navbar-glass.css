@@ -18,23 +18,23 @@
   width: min(1120px, calc(100% - 56px));
   min-height: 66px;
   padding: 8px 10px 8px 14px;
-  border: 1px solid rgba(255, 255, 255, .20);
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(17, 28, 78, .36), rgba(4, 10, 38, .22)),
-    rgba(7, 12, 45, .18);
-  -webkit-backdrop-filter: blur(30px) saturate(165%) brightness(.92);
-  backdrop-filter: blur(30px) saturate(165%) brightness(.92);
+    linear-gradient(180deg, rgba(20, 28, 74, .16), rgba(4, 8, 28, .055)),
+    rgba(5, 9, 29, .075);
+  -webkit-backdrop-filter: blur(22px) saturate(140%) brightness(1.01);
+  backdrop-filter: blur(22px) saturate(140%) brightness(1.01);
   box-shadow:
-    0 18px 48px rgba(0, 0, 0, .28),
-    0 4px 14px rgba(0, 0, 0, .18),
-    inset 0 1px 0 rgba(255, 255, 255, .20),
-    inset 0 -1px 0 rgba(255, 255, 255, .045);
+    0 12px 34px rgba(0, 0, 0, .15),
+    0 2px 8px rgba(0, 0, 0, .09),
+    inset 0 1px 0 rgba(255, 255, 255, .12),
+    inset 0 -1px 0 rgba(255, 255, 255, .025);
   color: var(--cream);
   pointer-events: auto;
 }
 
-/* Reflections make it read as glass, while still letting the page show through. */
+/* Keep just enough reflected light to read as glass without turning into a dark slab. */
 .nav-inner::before {
   content: "";
   position: absolute;
@@ -43,9 +43,9 @@
   pointer-events: none;
   border-radius: inherit;
   background:
-    radial-gradient(70% 110% at 10% -35%, rgba(255,255,255,.25), transparent 58%),
-    radial-gradient(52% 120% at 92% 145%, rgba(64,85,255,.16), transparent 65%),
-    linear-gradient(100deg, rgba(255,255,255,.035), transparent 28%, transparent 70%, rgba(255,255,255,.025));
+    radial-gradient(70% 110% at 10% -35%, rgba(255,255,255,.14), transparent 58%),
+    radial-gradient(52% 120% at 92% 145%, rgba(64,85,255,.08), transparent 65%),
+    linear-gradient(100deg, rgba(255,255,255,.018), transparent 28%, transparent 70%, rgba(255,255,255,.012));
 }
 
 .nav-inner::after {
@@ -55,7 +55,7 @@
   inset: 1px;
   border-radius: 20px;
   pointer-events: none;
-  box-shadow: inset 0 0 26px rgba(35, 53, 142, .10);
+  box-shadow: inset 0 0 20px rgba(35, 53, 142, .05);
 }
 
 .brand {
@@ -66,24 +66,24 @@
   width: 42px;
   height: 42px;
   border-radius: 13px;
-  border-color: rgba(255, 213, 41, .72);
-  background: rgba(4, 9, 34, .46);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  border-color: rgba(255, 213, 41, .62);
+  background: rgba(4, 9, 34, .24);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    0 6px 16px rgba(0,0,0,.18);
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 5px 13px rgba(0,0,0,.12);
 }
 
 .brand-text strong {
   color: var(--cream);
   font-size: 16px;
   letter-spacing: -.025em;
-  text-shadow: 0 1px 12px rgba(0,0,0,.35);
+  text-shadow: 0 1px 10px rgba(0,0,0,.28);
 }
 
 .brand-text small {
-  color: rgba(255,247,230,.62);
+  color: rgba(255,247,230,.58);
 }
 
 .desktop-links {
@@ -92,10 +92,10 @@
 }
 
 .desktop-links a {
-  color: rgba(255,247,230,.78);
+  color: rgba(255,247,230,.76);
   font-size: 13px;
   font-weight: 600;
-  text-shadow: 0 1px 10px rgba(0,0,0,.28);
+  text-shadow: 0 1px 8px rgba(0,0,0,.20);
   transition: color .2s ease, transform .2s ease;
 }
 
@@ -108,34 +108,34 @@
   bottom: -7px;
   height: 1px;
   background: var(--yellow);
-  box-shadow: 0 0 8px rgba(255,213,41,.55);
+  box-shadow: 0 0 7px rgba(255,213,41,.42);
 }
 
-/* Keep Hacktoberfest yellow as the one strong solid accent. */
+/* Keep the CTA visible, but reduce its visual weight so the hero remains dominant. */
 .navbar .button-yellow {
   min-height: 46px;
   padding-inline: 20px;
-  border: 1px solid rgba(255,255,255,.38);
+  border: 1px solid rgba(255,255,255,.28);
   border-radius: 14px;
-  background: linear-gradient(180deg, #ffe159 0%, var(--yellow) 72%);
+  background: linear-gradient(180deg, rgba(255,225,89,.96) 0%, rgba(255,213,41,.94) 72%);
   box-shadow:
-    0 8px 20px rgba(0,0,0,.20),
-    inset 0 1px 0 rgba(255,255,255,.72),
-    inset 0 -1px 0 rgba(126,84,0,.13);
+    0 6px 16px rgba(0,0,0,.15),
+    inset 0 1px 0 rgba(255,255,255,.58),
+    inset 0 -1px 0 rgba(126,84,0,.10);
 }
 
 .navbar .button-yellow:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 12px 26px rgba(0,0,0,.24),
-    inset 0 1px 0 rgba(255,255,255,.76),
-    inset 0 -1px 0 rgba(126,84,0,.13);
+    0 10px 22px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.64),
+    inset 0 -1px 0 rgba(126,84,0,.10);
 }
 
 .menu-button {
   color: var(--cream);
-  border-color: rgba(255,247,230,.22);
-  background: rgba(255,255,255,.055);
+  border-color: rgba(255,247,230,.16);
+  background: rgba(255,255,255,.035);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -176,9 +176,12 @@
     min-height: 60px;
     padding: 6px 8px 6px 10px;
     border-radius: 18px;
+    border-color: rgba(255,255,255,.10);
     background:
-      linear-gradient(180deg, rgba(17, 28, 78, .40), rgba(4, 10, 38, .26)),
-      rgba(7, 12, 45, .20);
+      linear-gradient(180deg, rgba(20, 28, 74, .18), rgba(4, 8, 28, .07)),
+      rgba(5, 9, 29, .085);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    backdrop-filter: blur(20px) saturate(140%);
   }
 
   .brand-mark {
@@ -198,17 +201,17 @@
     right: 12px;
     padding: 12px 16px 16px;
     color: var(--cream);
-    border: 1px solid rgba(255,247,230,.18);
+    border: 1px solid rgba(255,247,230,.13);
     border-radius: 16px;
-    background: rgba(7,12,45,.48);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    backdrop-filter: blur(28px) saturate(160%);
-    box-shadow: 0 20px 45px rgba(0,0,0,.30);
+    background: rgba(7,12,45,.34);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    backdrop-filter: blur(24px) saturate(150%);
+    box-shadow: 0 16px 36px rgba(0,0,0,.22);
     pointer-events: auto;
   }
 
   .mobile-menu a {
-    border-bottom-color: rgba(255,247,230,.12);
+    border-bottom-color: rgba(255,247,230,.10);
   }
 
   .hero-content {
@@ -228,7 +231,7 @@
   }
 
   .brand-text small {
-    color: rgba(255,247,230,.56);
+    color: rgba(255,247,230,.52);
   }
 
   .hero-content {
