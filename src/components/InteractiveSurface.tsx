@@ -58,7 +58,7 @@ export function InteractiveSurface({
         transformStyle: "preserve-3d",
         "--mx": "50%",
         "--my": "50%",
-      } as never}
+      } as any}
       onMouseMove={handleMove}
       onMouseLeave={reset}
       whileHover={{ y: -lift, scale: 1.008 }}
