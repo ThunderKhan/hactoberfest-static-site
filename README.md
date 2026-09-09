@@ -22,11 +22,10 @@ The production bundle is written to `dist/`.
 
 ## Deploy to Vercel
 
-1. Push this folder to GitHub.
-2. Import the repository into Vercel.
-3. Framework preset: **Vite**.
-4. Build command: `npm run build`.
-5. Output directory: `dist`.
+1. Import this repository into Vercel.
+2. Framework preset: **Vite**.
+3. Build command: `npm run build`.
+4. Output directory: `dist`.
 
 No backend or environment variables are required.
 
@@ -40,33 +39,25 @@ The most important field is:
 registrationUrl: "",
 ```
 
-When your official registration URL is available, change it to:
+When the official registration URL is available, change it to:
 
 ```ts
 registrationUrl: "https://...",
 ```
 
-All registration CTAs will then point to it.
-
-You can also edit the date, venue, schedule, build paths, FAQ, and toolkit content from the same file.
+All registration CTAs will then point to it. The same file also contains the date, venue, schedule, build paths, FAQ, and starter-kit copy.
 
 ## Main visual files
 
-- `src/styles.css` — all layout, colors, responsive behavior, and animations.
-- `public/hero-background.webp` — hero background image used by the landing page.
-- `public/hero-landscape.svg` — previous editable illustrated landscape asset.
+- `src/styles.css` — stylesheet entry point.
+- `src/styles/` — layout, colors, hero, section, and responsive styles.
+- `public/hero-bg/` — the optimized flower-valley hero image stored as base64 payload chunks.
+- `public/hero-landscape.svg` — lightweight illustrated fallback while the hero image loads.
 - `public/favicon.svg` — site favicon.
-- `public/og.png` — social preview card.
+- `public/og.svg` — social preview artwork.
+
+The hero payload is assembled by `src/main.tsx` in the browser and assigned to the `--hero-bg-image` CSS variable. This keeps the image self-contained in the repository while preserving the exact visual reference used for the hero.
 
 ## Design direction
 
-The site deliberately combines two visual ideas:
-
-- event-site utility: ticker, cream nav, outlined/offset buttons, pills, schedule, FAQ, clear registration CTAs;
-- editorial/cinematic atmosphere: deep cobalt sky, serif display typography, halftone texture, surreal flower field, and restrained yellow accents.
-
-The result is original rather than a literal copy of the reference site.
-
-## Hero background
-
-The hero uses `public/hero-background.webp`. Replace that file with any 16:9-ish image while keeping the same filename, or change the URL in `src/styles.css` under `.hero-landscape`.
+The site combines event-site utility — ticker, cream navigation, outlined/offset buttons, pills, schedule, FAQ, venue, and registration CTAs — with the darker editorial flower-field aesthetic used in the hero.
