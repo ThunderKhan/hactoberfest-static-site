@@ -1,7 +1,3 @@
-:root {
-  --hero-bg-fallback: url('/hero-landscape.svg');
-}
-
 .hero-landscape {
-  background-image: var(--hero-bg-image, var(--hero-bg-fallback));
+  background-image: url('/hero-background.webp');
 }
