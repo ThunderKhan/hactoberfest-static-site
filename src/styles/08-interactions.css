@@ -1,205 +1,12 @@
-/* Tactile interaction layer — spring tilt, pointer light and stronger map legibility. */
+/* Purposeful interaction layer.
+   Motion is reserved for real controls and the signature campus map; reading
+   surfaces stay visually stable. */
 
-.interactive-surface {
-  --mx: 50%;
-  --my: 50%;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  will-change: transform;
-}
-
-.interactive-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-}
-
-.interactive-sheen {
-  position: absolute;
-  z-index: 1;
-  inset: -1px;
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(260px circle at var(--mx) var(--my), rgba(255, 230, 132, .11), transparent 48%),
-    radial-gradient(480px circle at var(--mx) var(--my), rgba(76, 94, 174, .075), transparent 56%);
-  transition: opacity .28s ease;
-}
-
-.interactive-surface:hover .interactive-sheen {
-  opacity: 1;
-}
-
-/* Facts */
-.fact-cell {
-  transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
-}
-
-.fact-cell .interactive-content {
-  display: grid;
-}
-
-.fact-cell:hover {
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
-  border-color: rgba(240,198,65,.34) !important;
-  box-shadow: 0 18px 38px rgba(0,0,0,.18);
-}
-
-.fact-cell strong {
-  transition: text-shadow .25s ease, letter-spacing .25s ease;
-}
-
-.fact-cell:hover strong {
-  letter-spacing: -.02em;
-  text-shadow: 0 0 22px rgba(240,198,65,.18);
-}
-
-/* Manifesto */
-.manifesto-wrap {
-  margin-top: 90px;
-}
-
-.manifesto-wrap .manifesto {
-  margin-top: 0;
-}
-
-.manifesto .interactive-content {
-  display: grid;
-  grid-template-columns: 120px 1fr 150px;
-  align-items: center;
-  gap: 40px;
-}
-
-.manifesto:hover {
-  border-color: rgba(240,198,65,.9);
-  box-shadow: 0 24px 70px rgba(0,0,0,.28), 12px 12px 0 rgba(240,198,65,.16);
-}
-
-.manifesto-badge {
-  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
-}
-
-.manifesto:hover .manifesto-badge {
-  transform: rotate(-4deg) scale(1.06);
-  box-shadow: 0 0 40px rgba(240,198,65,.08);
-}
-
-/* Build cards */
-.path-card {
-  transform-origin: center;
-  transition: background .28s ease, border-color .28s ease, box-shadow .28s ease, color .28s ease;
-}
-
-.path-card .interactive-content {
-  min-height: 338px;
-}
-
-.path-card:hover {
-  z-index: 3;
-  border-color: rgba(240,198,65,.45);
-  box-shadow: 0 30px 64px rgba(0,0,0,.28), inset 0 0 0 1px rgba(240,198,65,.16);
-}
-
-.path-arrow {
-  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .35s cubic-bezier(.2,.8,.2,1);
-}
-
-.path-card:hover .path-arrow {
-  color: #090b10;
-  background: var(--cinema-gold);
-  border-color: var(--cinema-gold);
-  transform: rotate(8deg) scale(1.08);
-}
-
-/* Schedule */
-.timeline-card {
-  transition: border-color .28s ease, background .28s ease, box-shadow .28s ease;
-}
-
-.timeline-card:hover {
-  z-index: 3;
-  background:
-    radial-gradient(380px circle at var(--mx) var(--my), rgba(240,198,65,.08), transparent 54%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-}
-
-.timeline-row time,
-.timeline-dot {
-  transition: color .25s ease, box-shadow .25s ease, transform .25s ease;
-}
-
-.timeline-row:hover time {
-  color: #ffe06a;
-}
-
-.timeline-row:hover .timeline-dot {
-  transform: scale(1.18);
-  box-shadow: 0 0 0 5px #090b11, 0 0 30px rgba(240,198,65,.30);
-}
-
-/* Console + toolkit */
-.toolkit-console {
-  transition: border-color .28s ease, box-shadow .28s ease;
-}
-
-.toolkit-console:hover {
-  border-color: rgba(240,198,65,.38);
-  box-shadow: 0 34px 74px rgba(0,0,0,.32), 12px 12px 0 rgba(240,198,65,.12);
-}
-
-.console-bar span {
-  transition: transform .22s ease, filter .22s ease;
-}
-
-.toolkit-console:hover .console-bar span {
-  transform: scale(1.12);
-  filter: brightness(1.12);
-}
-
-.tool-row {
-  transition: transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, background .25s ease;
-}
-
-.tool-row:hover {
-  transform: translateX(8px);
-  border-color: rgba(240,198,65,.28);
-  background: linear-gradient(90deg, rgba(240,198,65,.035), transparent 80%);
-}
-
-/* Rewards */
-.rewards-panel {
-  padding: 32px;
-  border: 1px solid rgba(255,247,230,.10);
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255,255,255,.028), rgba(255,255,255,.009));
-  transition: border-color .28s ease, box-shadow .28s ease;
-}
-
-.rewards-panel:hover {
-  border-color: rgba(240,198,65,.34);
-  box-shadow: 0 28px 66px rgba(0,0,0,.23);
-}
-
-.reward-chips span {
-  cursor: default;
-  transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
-}
-
-.reward-chips span:hover {
-  transform: translateY(-4px) rotate(-1deg);
-  color: #090b10;
-  background: var(--cinema-gold);
-  border-color: var(--cinema-gold);
-  box-shadow: 0 10px 26px rgba(240,198,65,.14);
-}
-
-/* FAQ is interactive without tilting the reading plane. */
+/* FAQ disclosure feedback */
 .interactive-accordion {
   position: relative;
   overflow: hidden;
-  transition: background .28s ease, border-color .28s ease;
+  transition: background .22s ease, border-color .22s ease;
 }
 
 .interactive-accordion::before {
@@ -208,71 +15,34 @@
   inset: 0;
   pointer-events: none;
   opacity: 0;
-  background: linear-gradient(90deg, rgba(240,198,65,.055), transparent 62%);
-  transition: opacity .28s ease;
+  background: linear-gradient(90deg, rgba(240,198,65,.05), transparent 62%);
+  transition: opacity .22s ease;
 }
 
 .interactive-accordion:hover::before,
-.interactive-accordion.open::before {
-  opacity: 1;
-}
-
-.interactive-accordion:hover {
-  border-color: rgba(240,198,65,.28);
-}
-
+.interactive-accordion.open::before { opacity: 1; }
+.interactive-accordion:hover { border-color: rgba(240,198,65,.24); }
 .interactive-accordion button strong,
 .interactive-accordion button i {
-  transition: transform .28s cubic-bezier(.2,.8,.2,1), color .25s ease;
+  transition: transform .2s cubic-bezier(.16,1,.3,1), color .2s ease;
 }
+.interactive-accordion:hover button strong { transform: translateX(4px); }
+.interactive-accordion:hover button i { color: #ffe36b; }
 
-.interactive-accordion:hover button strong {
-  transform: translateX(7px);
-}
-
-.interactive-accordion:hover button i {
-  transform: rotate(8deg) scale(1.08);
-  color: #ffe36b;
-}
-
-/* Buttons and pills get a little physicality too. */
-.button {
-  will-change: transform;
-}
-
-.button .arrow-icon {
-  transition: transform .25s cubic-bezier(.2,.8,.2,1);
-}
-
-.button:hover .arrow-icon {
-  transform: translateX(4px);
-}
-
-.button-ghost:hover .arrow-icon {
-  transform: translateY(3px);
-}
+/* Buttons: small directional feedback, not card-like motion. */
+.button .arrow-icon { transition: transform .2s cubic-bezier(.16,1,.3,1); }
+.button:hover .arrow-icon { transform: translateX(3px); }
+.button-ghost:hover .arrow-icon { transform: translateY(2px); }
 
 .hero-pills span {
-  transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s ease, border-color .25s ease;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
 }
-
 .hero-pills span:hover {
-  transform: translateY(-3px);
-  background: rgba(10,12,25,.74);
+  background: rgba(10,12,25,.7);
   border-color: #ffe36b;
 }
 
-.inline-note span {
-  transition: transform .25s ease, background .25s ease, color .25s ease;
-}
-
-.inline-note span:hover {
-  transform: translateY(-3px) rotate(-1deg);
-  color: #080a10;
-  background: var(--cinema-gold);
-}
-
-/* ---------------- Visible interactive venue map ---------------- */
+/* ---------------- Signature interactive campus map ---------------- */
 .location-map-card {
   background: #0b0e16;
   border-color: rgba(255,247,230,.18);
@@ -300,25 +70,10 @@
   background-size: 29px 29px, 41px 41px;
 }
 
-.location-map-roads {
-  z-index: 1;
-}
-
-.location-map-roads .road-main {
-  stroke: rgba(255,247,230,.33);
-  stroke-width: 3.5;
-}
-
-.location-map-roads .road-mid {
-  stroke: rgba(208,215,236,.25);
-  stroke-width: 2.25;
-}
-
-.location-map-roads .road-minor {
-  stroke: rgba(188,199,226,.15);
-  stroke-width: 1.25;
-}
-
+.location-map-roads { z-index: 1; }
+.location-map-roads .road-main { stroke: rgba(255,247,230,.33); stroke-width: 3.5; }
+.location-map-roads .road-mid { stroke: rgba(208,215,236,.25); stroke-width: 2.25; }
+.location-map-roads .road-minor { stroke: rgba(188,199,226,.15); stroke-width: 1.25; }
 .location-map-roads .road-curve {
   stroke: rgba(240,198,65,.32);
   stroke-width: 2.1;
@@ -331,7 +86,6 @@
   background: rgba(217,221,232,.085);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 8px 20px rgba(0,0,0,.10);
 }
-
 .building-f { top: 8%; left: 58%; width: 13%; height: 11%; }
 .building-g { top: 58%; left: 42%; width: 11%; height: 16%; }
 
@@ -344,17 +98,11 @@
   text-transform: uppercase;
   pointer-events: none;
 }
-
 .district-a { left: 7%; top: 29%; }
 .district-b { right: 9%; top: 48%; color: rgba(240,198,65,.38); }
 .district-c { left: 45%; top: 11%; }
 
-.location-map-pin {
-  z-index: 5;
-  left: 53%;
-  top: 46%;
-}
-
+.location-map-pin { z-index: 5; left: 53%; top: 46%; }
 .location-map-pin-ring {
   position: absolute;
   left: 50%;
@@ -366,19 +114,12 @@
   transform: translate(-50%, -50%);
   animation: mapPulse 2.4s ease-out infinite;
 }
-
 @keyframes mapPulse {
   0% { opacity: .62; transform: translate(-50%, -50%) scale(.72); }
   75%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.72); }
 }
 
-.map-expanded-details {
-  position: absolute;
-  z-index: 3;
-  inset: 0;
-  pointer-events: none;
-}
-
+.map-expanded-details { position: absolute; z-index: 3; inset: 0; pointer-events: none; }
 .map-node {
   position: absolute;
   width: 8px;
@@ -388,12 +129,10 @@
   background: #101522;
   box-shadow: 0 0 14px rgba(240,198,65,.16);
 }
-
 .node-a { left: 22%; top: 35%; }
 .node-b { left: 67%; top: 35%; }
 .node-c { left: 31%; top: 68%; }
 .node-d { left: 84%; top: 68%; }
-
 .map-route-label {
   position: absolute;
   right: 5%;
@@ -413,7 +152,6 @@
   background-size: 32px 32px;
   mix-blend-mode: screen;
 }
-
 .location-map-content {
   position: absolute;
   z-index: 6;
@@ -421,12 +159,7 @@
   min-height: 0;
   padding: 24px 26px;
 }
-
-.location-map-bottom {
-  position: relative;
-  padding-top: 68px;
-}
-
+.location-map-bottom { position: relative; padding-top: 68px; }
 .location-map-bottom::before {
   content: "";
   position: absolute;
@@ -438,76 +171,24 @@
   background: linear-gradient(180deg, transparent, rgba(5,7,12,.73) 46%, rgba(5,7,12,.96));
   pointer-events: none;
 }
-
-.location-map-bottom p {
-  display: block;
-  margin-top: 9px;
-}
-
+.location-map-bottom p { display: block; margin-top: 9px; }
 .location-map-status {
   background: rgba(7,10,17,.58);
   border-color: rgba(255,247,230,.13);
   backdrop-filter: blur(10px);
 }
+.location-map-hint { bottom: 3px; }
 
-.location-map-hint {
-  bottom: 3px;
-}
-
-@media (max-width: 860px) {
-  .manifesto .interactive-content {
-    grid-template-columns: 75px 1fr;
-  }
-
-  .manifesto .manifesto-badge {
-    display: none;
-  }
-
-  .path-card .interactive-content {
-    min-height: 278px;
-  }
-}
-
-@media (max-width: 560px) {
-  .manifesto-wrap {
-    margin-top: 60px;
-  }
-
-  .manifesto .interactive-content {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .rewards-panel {
-    padding: 24px 20px;
-  }
-
-  .path-card .interactive-content {
-    min-height: 248px;
-  }
-
-  .location-map-content {
-    padding: 19px;
-  }
-
-  .location-map-bottom::before {
-    left: -19px;
-    right: -19px;
-    bottom: -19px;
-  }
+@media (hover: none) {
+  .interactive-accordion:hover button strong { transform: none; }
+  .button:hover .arrow-icon,
+  .button-ghost:hover .arrow-icon { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .location-map-pin-ring {
-    animation: none;
-  }
-
-  .tool-row,
-  .reward-chips span,
+  .location-map-pin-ring { animation: none; opacity: .45; }
   .interactive-accordion button strong,
   .interactive-accordion button i,
-  .hero-pills span,
-  .inline-note span {
-    transition: none;
-  }
+  .button .arrow-icon,
+  .hero-pills span { transition-duration: .12s; }
 }
