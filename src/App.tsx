@@ -1,7 +1,23 @@
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { EVENT, FAQS, PATHS, SCHEDULE, TICKER, TOOLKIT } from "./event";
 import { InteractiveSurface } from "./components/InteractiveSurface";
 import { LocationMap } from "./components/LocationMap";
+
+const TERMINAL_SCRIPT = `# before you arrive
+
+$ git --version
+$ github-account: ready
+$ laptop-charge: 100%
+$ curiosity: required
+
+# during the day
+- ask questions early
+- commit often
+- document decisions
+- help somebody else
+- ship before polishing
+
+> open source is a conversation.`;
 
 function Spark({ size = 18 }: { size?: number }) {
   return (
@@ -61,6 +77,59 @@ function SectionHead({ eyebrow, title, copy, light = false }: { eyebrow: string;
       <h2>{title}</h2>
       {copy ? <p>{copy}</p> : null}
     </div>
+  );
+}
+
+function TypewriterTerminal({ text, speed = 18, startDelay = 280 }: { text: string; speed?: number; startDelay?: number }) {
+  const preRef = useRef<HTMLPreElement>(null);
+  const [started, setStarted] = useState(false);
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    if (!preRef.current || started) return;
+    const node = preRef.current;
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    let cancelled = false;
+    let index = 0;
+    let timer = 0;
+
+    const step = () => {
+      if (cancelled) return;
+      index += 1;
+      setDisplayed(text.slice(0, index));
+      if (index < text.length) {
+        const previousChar = text[index - 1];
+        const extraDelay = previousChar === "\n" ? 135 : previousChar === "$" || previousChar === ">" ? 72 : 0;
+        timer = window.setTimeout(step, speed + extraDelay);
+      }
+    };
+
+    timer = window.setTimeout(step, startDelay);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [speed, startDelay, started, text]);
+
+  return (
+    <pre ref={preRef} className={`terminal-typewriter${started ? " started" : ""}`} aria-live="polite">
+      {displayed}
+      <span className="terminal-cursor" aria-hidden="true" />
+    </pre>
   );
 }
 
@@ -154,8 +223,6 @@ function App() {
               <Button href="#schedule" variant="ghost">Explore schedule <Arrow direction="down" /></Button>
             </div>
           </div>
-          <div className="hero-bottom-note left-note" aria-hidden="true">OPEN<br />SOURCE<br />LIVES HERE</div>
-          <div className="hero-bottom-note right-note" aria-hidden="true">DDUGU ×<br />GLOBAL<br />IMPACT →</div>
         </section>
 
         <section className="fact-strip">
@@ -237,7 +304,7 @@ function App() {
             <div className="reveal">
               <InteractiveSurface className="toolkit-console" strength={3} lift={7} ariaLabel="Open source starter checklist">
                 <div className="console-bar"><span /><span /><span /><b>starter-kit.md</b></div>
-                <pre>{`# before you arrive\n\n$ git --version\n$ github-account: ready\n$ laptop-charge: 100%\n$ curiosity: required\n\n# during the day\n- ask questions early\n- commit often\n- document decisions\n- help somebody else\n- ship before polishing\n\n> open source is a conversation.`}</pre>
+                <TypewriterTerminal text={TERMINAL_SCRIPT} />
               </InteractiveSurface>
             </div>
             <div className="toolkit-copy reveal">
