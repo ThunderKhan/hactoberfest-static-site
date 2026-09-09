@@ -8,7 +8,6 @@
   overflow: hidden;
   transition: background .22s ease, border-color .22s ease;
 }
-
 .interactive-accordion::before {
   content: "";
   position: absolute;
@@ -18,37 +17,57 @@
   background: linear-gradient(90deg, rgba(240,198,65,.05), transparent 62%);
   transition: opacity .22s ease;
 }
-
 .interactive-accordion:hover::before,
 .interactive-accordion.open::before { opacity: 1; }
 .interactive-accordion:hover { border-color: rgba(240,198,65,.24); }
 .interactive-accordion button strong,
-.interactive-accordion button i {
-  transition: transform .2s cubic-bezier(.16,1,.3,1), color .2s ease;
-}
+.interactive-accordion button i { transition: transform .2s cubic-bezier(.16,1,.3,1), color .2s ease; }
 .interactive-accordion:hover button strong { transform: translateX(4px); }
 .interactive-accordion:hover button i { color: #ffe36b; }
 
-/* Buttons: small directional feedback, not card-like motion. */
+/* Buttons: directional feedback, not card-like motion. */
 .button .arrow-icon { transition: transform .2s cubic-bezier(.16,1,.3,1); }
 .button:hover .arrow-icon { transform: translateX(3px); }
 .button-ghost:hover .arrow-icon { transform: translateY(2px); }
+.hero-pills span { transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.hero-pills span:hover { background: rgba(10,12,25,.7); border-color: #ffe36b; }
 
-.hero-pills span {
-  transition: background .2s ease, border-color .2s ease, color .2s ease;
-}
-.hero-pills span:hover {
-  background: rgba(10,12,25,.7);
-  border-color: #ffe36b;
-}
+/* Informational surfaces stay calm. */
+.path-card,
+.timeline-card,
+.toolkit-console,
+.tool-row,
+.rewards-panel,
+.reward-chips span,
+.inline-note span,
+.fact-cell,
+.manifesto { transform: none; will-change: auto; }
 
-/* ---------------- Signature interactive campus map ---------------- */
-.location-map-card {
-  background: #0b0e16;
-  border-color: rgba(255,247,230,.18);
-  box-shadow: 0 34px 82px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.07);
+.path-card { transition: background .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.path-card:hover {
+  color: var(--cream);
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+  border-color: rgba(240,198,65,.30);
+  box-shadow: inset 0 0 0 1px rgba(240,198,65,.08);
 }
+.path-card:hover p { color: rgba(255,247,230,.72); }
+.path-card:hover .path-top span { color: var(--cinema-gold); }
 
+.timeline-card { transition: background .2s ease, border-color .2s ease; }
+.timeline-card:hover {
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border-color: rgba(240,198,65,.28);
+}
+.timeline-row:hover time { color: var(--cinema-gold); }
+
+.toolkit-console { transition: border-color .2s ease, box-shadow .2s ease; }
+.toolkit-console:hover { border-color: rgba(255,247,230,.18); box-shadow: 0 28px 70px rgba(0,0,0,.30); }
+.tool-row:hover { background: transparent; }
+.reward-chips span:hover { box-shadow: inset 0 0 0 1px rgba(240,198,65,.12); }
+.inline-note span:hover { color: var(--cream); background: rgba(255,255,255,.065); }
+
+/* Signature interactive campus map */
+.location-map-card { box-shadow: 0 34px 82px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.07); }
 .location-map-canvas {
   position: absolute;
   inset: 0;
@@ -58,7 +77,6 @@
     linear-gradient(145deg, #161b29 0%, #0c1019 52%, #090b11 100%);
   transform-origin: center;
 }
-
 .location-map-canvas::before {
   content: "";
   position: absolute;
@@ -70,119 +88,27 @@
   background-size: 29px 29px, 41px 41px;
 }
 
-.location-map-roads { z-index: 1; }
-.location-map-roads .road-main { stroke: rgba(255,247,230,.33); stroke-width: 3.5; }
-.location-map-roads .road-mid { stroke: rgba(208,215,236,.25); stroke-width: 2.25; }
-.location-map-roads .road-minor { stroke: rgba(188,199,226,.15); stroke-width: 1.25; }
-.location-map-roads .road-curve {
-  stroke: rgba(240,198,65,.32);
-  stroke-width: 2.1;
-  vector-effect: non-scaling-stroke;
+/* Touch/input adaptation */
+@media (pointer: coarse) {
+  .button,
+  .menu-button,
+  .faq-item button,
+  .top-button,
+  .location-map { min-height: 44px; }
+  .desktop-links a,
+  .footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
 }
-
-.map-building {
-  z-index: 2;
-  border-color: rgba(255,247,230,.17);
-  background: rgba(217,221,232,.085);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 8px 20px rgba(0,0,0,.10);
-}
-.building-f { top: 8%; left: 58%; width: 13%; height: 11%; }
-.building-g { top: 58%; left: 42%; width: 11%; height: 16%; }
-
-.map-district {
-  position: absolute;
-  z-index: 2;
-  color: rgba(255,247,230,.24);
-  font: 500 8px/1 var(--mono);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-.district-a { left: 7%; top: 29%; }
-.district-b { right: 9%; top: 48%; color: rgba(240,198,65,.38); }
-.district-c { left: 45%; top: 11%; }
-
-.location-map-pin { z-index: 5; left: 53%; top: 46%; }
-.location-map-pin-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 46px;
-  height: 46px;
-  border: 1px solid rgba(240,198,65,.55);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: mapPulse 2.4s ease-out infinite;
-}
-@keyframes mapPulse {
-  0% { opacity: .62; transform: translate(-50%, -50%) scale(.72); }
-  75%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.72); }
-}
-
-.map-expanded-details { position: absolute; z-index: 3; inset: 0; pointer-events: none; }
-.map-node {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,247,230,.65);
-  background: #101522;
-  box-shadow: 0 0 14px rgba(240,198,65,.16);
-}
-.node-a { left: 22%; top: 35%; }
-.node-b { left: 67%; top: 35%; }
-.node-c { left: 31%; top: 68%; }
-.node-d { left: 84%; top: 68%; }
-.map-route-label {
-  position: absolute;
-  right: 5%;
-  bottom: 7%;
-  padding: 6px 8px;
-  border: 1px solid rgba(240,198,65,.28);
-  border-radius: 999px;
-  color: rgba(240,198,65,.68);
-  background: rgba(7,9,15,.72);
-  font: 500 8px/1 var(--mono);
-  letter-spacing: .11em;
-}
-
-.location-map-grid {
-  z-index: 2;
-  opacity: .30;
-  background-size: 32px 32px;
-  mix-blend-mode: screen;
-}
-.location-map-content {
-  position: absolute;
-  z-index: 6;
-  inset: 0;
-  min-height: 0;
-  padding: 24px 26px;
-}
-.location-map-bottom { position: relative; padding-top: 68px; }
-.location-map-bottom::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: -26px;
-  right: -26px;
-  bottom: -24px;
-  height: 170px;
-  background: linear-gradient(180deg, transparent, rgba(5,7,12,.73) 46%, rgba(5,7,12,.96));
-  pointer-events: none;
-}
-.location-map-bottom p { display: block; margin-top: 9px; }
-.location-map-status {
-  background: rgba(7,10,17,.58);
-  border-color: rgba(255,247,230,.13);
-  backdrop-filter: blur(10px);
-}
-.location-map-hint { bottom: 3px; }
 
 @media (hover: none) {
-  .interactive-accordion:hover button strong { transform: none; }
+  .interactive-accordion:hover button strong,
   .button:hover .arrow-icon,
   .button-ghost:hover .arrow-icon { transform: none; }
+  .path-card:hover,
+  .timeline-card:hover,
+  .toolkit-console:hover,
+  .tool-row:hover,
+  .reward-chips span:hover,
+  .inline-note span:hover { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -190,5 +116,8 @@
   .interactive-accordion button strong,
   .interactive-accordion button i,
   .button .arrow-icon,
-  .hero-pills span { transition-duration: .12s; }
+  .hero-pills span,
+  .path-card,
+  .timeline-card,
+  .toolkit-console { transition-duration: .12s; }
 }
