@@ -1,0 +1,1 @@
+# hactoberfest-static-site
