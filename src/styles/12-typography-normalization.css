@@ -1,0 +1,373 @@
+/* Global typography normalization pass.
+   Imported last so the site keeps its existing layout/visual identity while
+   bringing microcopy, labels and card text back into proportion with their containers. */
+
+:root {
+  --type-meta: clamp(11px, .72vw, 12px);
+  --type-label: clamp(12px, .8vw, 13px);
+  --type-small: clamp(13px, .92vw, 15px);
+  --type-body: clamp(15px, 1.02vw, 17px);
+  --type-body-lg: clamp(17px, 1.18vw, 19px);
+  --type-card-title: clamp(25px, 2vw, 32px);
+}
+
+body {
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+
+/* Navigation */
+.brand-text strong {
+  font-size: clamp(16px, 1vw, 18px);
+}
+
+.brand-text small {
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: .22em;
+}
+
+.desktop-links a {
+  font-size: 14px;
+}
+
+.mobile-menu a {
+  font-size: 15px;
+}
+
+.button,
+.navbar .button-yellow {
+  font-size: 14px;
+}
+
+/* Hero */
+.hero-pills span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.hero-kicker {
+  font-size: clamp(20px, 1.55vw, 23px);
+}
+
+.hero-copy {
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.62;
+}
+
+/* Event facts */
+.fact-cell small {
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: .13em;
+}
+
+.fact-cell strong {
+  font-size: clamp(28px, 2.25vw, 36px);
+}
+
+.fact-cell span:not(.interactive-sheen) {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Shared section labels */
+.eyebrow {
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .10em;
+}
+
+.section-head p,
+.editorial-body p,
+.schedule-intro > p,
+.toolkit-copy > p,
+.rewards-copy > p:not(.lead),
+.venue-copy > p,
+.faq-heading > p,
+.register-inner > p:not(.hero-kicker) {
+  font-size: var(--type-body);
+}
+
+/* About */
+.editorial-body .lead {
+  font-size: clamp(28px, 2.15vw, 32px);
+  line-height: 1.32;
+}
+
+.inline-note {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.inline-note span {
+  font-size: inherit;
+}
+
+/* Manifesto */
+.manifesto-text small {
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .12em;
+}
+
+.manifesto-badge {
+  font-size: clamp(11px, .92vw, 14px);
+  line-height: 1.35;
+}
+
+/* Build path cards */
+.path-top span {
+  font-size: 14px;
+}
+
+.path-top b {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.path-card h3 {
+  font-size: clamp(29px, 2.15vw, 34px);
+  line-height: 1.04;
+}
+
+.path-card p {
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+/* Schedule */
+.schedule-stamp span {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.timeline-row time {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.timeline-card small {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.timeline-card h3 {
+  font-size: clamp(24px, 1.8vw, 28px);
+  line-height: 1.08;
+}
+
+.timeline-card p {
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+/* Toolkit / terminal */
+.console-bar b {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.toolkit-console pre,
+.terminal-typewriter {
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.78;
+}
+
+.tool-row > span {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.tool-row h3 {
+  font-size: clamp(20px, 1.45vw, 23px);
+  line-height: 1.12;
+}
+
+.tool-row p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* Rewards */
+.rewards-copy .lead {
+  font-size: clamp(31px, 2.45vw, 37px);
+  line-height: 1.2;
+}
+
+.reward-chips span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.rewards-copy small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Venue copy */
+.venue-copy h3 {
+  font-size: clamp(23px, 1.75vw, 27px);
+  line-height: 1.2;
+}
+
+.venue-copy .venue-fine {
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+/* Interactive map */
+.location-map-status {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.map-district,
+.map-route-label {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.location-map-bottom p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.location-map-hint {
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* FAQ */
+.faq-item button > span {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.faq-item button strong {
+  font-size: clamp(21px, 1.6vw, 24px);
+  line-height: 1.18;
+}
+
+.faq-answer p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Final CTA */
+.register-inner > small {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* Bottom marquee */
+.ticker-track span {
+  font-size: clamp(15px, 1.12vw, 19px);
+}
+
+/* Footer */
+.footer-brand strong {
+  font-size: 16px;
+}
+
+.footer-brand span {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.footer-links {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.footer p {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+@media (max-width: 860px) {
+  .brand-text strong { font-size: 16px; }
+  .brand-text small { font-size: 10px; }
+  .mobile-menu a { font-size: 15px; }
+
+  .hero-pills span { font-size: 10px; }
+  .hero-copy { font-size: 16px; }
+
+  .fact-cell small { font-size: 10.5px; }
+  .fact-cell span:not(.interactive-sheen) { font-size: 13px; }
+
+  .eyebrow { font-size: 11px; }
+  .path-card p,
+  .timeline-card p,
+  .tool-row p,
+  .faq-answer p { font-size: 14.5px; }
+
+  .location-map-status { font-size: 10px; }
+  .map-district,
+  .map-route-label { font-size: 9px; }
+}
+
+@media (max-width: 560px) {
+  .button { font-size: 13.5px; }
+  .brand-text small { font-size: 9.5px; }
+
+  .hero-pills span { font-size: 10px; }
+  .hero-kicker { font-size: 18px; }
+  .hero-copy { font-size: 15.5px; }
+
+  .fact-cell small { font-size: 10px; }
+  .fact-cell strong { font-size: clamp(23px, 7vw, 28px); }
+  .fact-cell span:not(.interactive-sheen) { font-size: 12px; }
+
+  .eyebrow { font-size: 10.5px; }
+  .editorial-body p,
+  .section-head p,
+  .schedule-intro > p,
+  .toolkit-copy > p,
+  .rewards-copy > p:not(.lead),
+  .venue-copy > p,
+  .faq-heading > p,
+  .register-inner > p:not(.hero-kicker) {
+    font-size: 15px;
+  }
+
+  .inline-note { font-size: 11px; }
+  .manifesto-text small { font-size: 10.5px; }
+
+  .path-top b { font-size: 10px; }
+  .path-card p { font-size: 14.5px; }
+
+  .timeline-row time { font-size: 12px; }
+  .timeline-card small { font-size: 10.5px; }
+  .timeline-card h3 { font-size: 23px; }
+  .timeline-card p { font-size: 14.5px; }
+
+  .console-bar b { font-size: 10.5px; }
+  .toolkit-console pre,
+  .terminal-typewriter { font-size: 13.5px; line-height: 1.72; }
+  .tool-row > span { font-size: 11px; }
+  .tool-row p { font-size: 14px; }
+
+  .reward-chips span { font-size: 10.5px; }
+  .rewards-copy small { font-size: 11px; }
+
+  .venue-copy .venue-fine { font-size: 12px; }
+  .location-map-status { font-size: 9.5px; }
+  .map-district,
+  .map-route-label { font-size: 8.5px; }
+  .location-map-bottom p { font-size: 11.5px; }
+  .location-map-hint { font-size: 9.5px; }
+
+  .faq-item button > span { font-size: 10px; }
+  .faq-item button strong { font-size: 20px; }
+  .faq-answer p { font-size: 14.5px; }
+
+  .register-inner > small { font-size: 11px; }
+
+  .ticker-track span { font-size: 13.5px; }
+
+  .footer-brand strong { font-size: 15px; }
+  .footer-brand span { font-size: 12px; }
+  .footer-links { font-size: 13px; }
+  .footer p { font-size: 11.5px; }
+}
