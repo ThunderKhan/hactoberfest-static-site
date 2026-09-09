@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 const heroBase64 = [0, 1, 2, 3, 4]
   .map((index) =>
     readFileSync(
-      new URL(`./public/hero-bg/part-${String(index).padStart(2, "0")}.b64`, import.meta.url),
+      `public/hero-bg/part-${String(index).padStart(2, "0")}.b64`,
       "utf8",
     ).trim(),
   )
