@@ -1,10 +1,10 @@
-/* Floating liquid-glass navigation — deliberately layered over the hero. */
+/* Floating liquid-glass navigation — fixed across the entire page. */
 .navbar {
-  position: absolute;
-  top: 22px;
+  position: fixed;
+  top: 18px;
   left: 0;
   right: 0;
-  z-index: 70;
+  z-index: 999;
   background: transparent;
   border: 0;
   backdrop-filter: none;
@@ -18,23 +18,23 @@
   width: min(1120px, calc(100% - 56px));
   min-height: 66px;
   padding: 8px 10px 8px 14px;
-  border: 1px solid rgba(255, 247, 230, .18);
+  border: 1px solid rgba(255, 255, 255, .20);
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(23, 31, 86, .68), rgba(7, 12, 45, .58)),
-    rgba(8, 13, 46, .55);
-  -webkit-backdrop-filter: blur(24px) saturate(145%);
-  backdrop-filter: blur(24px) saturate(145%);
+    linear-gradient(180deg, rgba(17, 28, 78, .36), rgba(4, 10, 38, .22)),
+    rgba(7, 12, 45, .18);
+  -webkit-backdrop-filter: blur(30px) saturate(165%) brightness(.92);
+  backdrop-filter: blur(30px) saturate(165%) brightness(.92);
   box-shadow:
-    0 22px 55px rgba(0, 0, 0, .28),
-    0 5px 16px rgba(0, 0, 0, .18),
-    inset 0 1px 0 rgba(255, 255, 255, .14),
-    inset 0 -1px 0 rgba(255, 255, 255, .035);
+    0 18px 48px rgba(0, 0, 0, .28),
+    0 4px 14px rgba(0, 0, 0, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .20),
+    inset 0 -1px 0 rgba(255, 255, 255, .045);
   color: var(--cream);
   pointer-events: auto;
 }
 
-/* soft specular sheen instead of a flat translucent rectangle */
+/* Reflections make it read as glass, while still letting the page show through. */
 .nav-inner::before {
   content: "";
   position: absolute;
@@ -43,8 +43,19 @@
   pointer-events: none;
   border-radius: inherit;
   background:
-    radial-gradient(80% 110% at 8% -35%, rgba(255,255,255,.22), transparent 58%),
-    radial-gradient(60% 130% at 92% 150%, rgba(49,70,255,.16), transparent 64%);
+    radial-gradient(70% 110% at 10% -35%, rgba(255,255,255,.25), transparent 58%),
+    radial-gradient(52% 120% at 92% 145%, rgba(64,85,255,.16), transparent 65%),
+    linear-gradient(100deg, rgba(255,255,255,.035), transparent 28%, transparent 70%, rgba(255,255,255,.025));
+}
+
+.nav-inner::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: inset 0 0 26px rgba(35, 53, 142, .10);
 }
 
 .brand {
@@ -56,20 +67,23 @@
   height: 42px;
   border-radius: 13px;
   border-color: rgba(255, 213, 41, .72);
-  background: rgba(5, 9, 35, .72);
+  background: rgba(4, 9, 34, .46);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.11),
-    0 6px 16px rgba(0,0,0,.22);
+    inset 0 1px 0 rgba(255,255,255,.12),
+    0 6px 16px rgba(0,0,0,.18);
 }
 
 .brand-text strong {
   color: var(--cream);
   font-size: 16px;
   letter-spacing: -.025em;
+  text-shadow: 0 1px 12px rgba(0,0,0,.35);
 }
 
 .brand-text small {
-  color: rgba(255,247,230,.58);
+  color: rgba(255,247,230,.62);
 }
 
 .desktop-links {
@@ -78,9 +92,10 @@
 }
 
 .desktop-links a {
-  color: rgba(255,247,230,.72);
+  color: rgba(255,247,230,.78);
   font-size: 13px;
   font-weight: 600;
+  text-shadow: 0 1px 10px rgba(0,0,0,.28);
   transition: color .2s ease, transform .2s ease;
 }
 
@@ -96,38 +111,40 @@
   box-shadow: 0 0 8px rgba(255,213,41,.55);
 }
 
-/* Keep Hacktoberfest yellow, but make the CTA feel like glass rather than a sticker. */
+/* Keep Hacktoberfest yellow as the one strong solid accent. */
 .navbar .button-yellow {
   min-height: 46px;
   padding-inline: 20px;
-  border: 1px solid rgba(255,255,255,.34);
+  border: 1px solid rgba(255,255,255,.38);
   border-radius: 14px;
   background: linear-gradient(180deg, #ffe159 0%, var(--yellow) 72%);
   box-shadow:
-    0 8px 20px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.68),
+    0 8px 20px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.72),
     inset 0 -1px 0 rgba(126,84,0,.13);
 }
 
 .navbar .button-yellow:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 12px 26px rgba(0,0,0,.27),
-    inset 0 1px 0 rgba(255,255,255,.72),
+    0 12px 26px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.76),
     inset 0 -1px 0 rgba(126,84,0,.13);
 }
 
 .menu-button {
   color: var(--cream);
-  border-color: rgba(255,247,230,.24);
-  background: rgba(255,255,255,.06);
+  border-color: rgba(255,247,230,.22);
+  background: rgba(255,255,255,.055);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .menu-button span {
   background: var(--cream);
 }
 
-/* Navbar no longer consumes its own cream-colored row. */
+/* Navbar floats over the hero rather than consuming its own row. */
 .hero {
   min-height: 100svh;
   height: max(780px, 100svh);
@@ -151,7 +168,7 @@
 
 @media (max-width: 860px) {
   .navbar {
-    top: 14px;
+    top: 12px;
   }
 
   .nav-inner {
@@ -159,6 +176,9 @@
     min-height: 60px;
     padding: 6px 8px 6px 10px;
     border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(17, 28, 78, .40), rgba(4, 10, 38, .26)),
+      rgba(7, 12, 45, .20);
   }
 
   .brand-mark {
@@ -178,12 +198,12 @@
     right: 12px;
     padding: 12px 16px 16px;
     color: var(--cream);
-    border: 1px solid rgba(255,247,230,.16);
+    border: 1px solid rgba(255,247,230,.18);
     border-radius: 16px;
-    background: rgba(7,12,45,.9);
-    -webkit-backdrop-filter: blur(22px) saturate(140%);
-    backdrop-filter: blur(22px) saturate(140%);
-    box-shadow: 0 20px 45px rgba(0,0,0,.3);
+    background: rgba(7,12,45,.48);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    backdrop-filter: blur(28px) saturate(160%);
+    box-shadow: 0 20px 45px rgba(0,0,0,.30);
     pointer-events: auto;
   }
 
@@ -198,7 +218,7 @@
 
 @media (max-width: 560px) {
   .navbar {
-    top: 10px;
+    top: 9px;
   }
 
   .nav-inner {
@@ -208,7 +228,7 @@
   }
 
   .brand-text small {
-    color: rgba(255,247,230,.52);
+    color: rgba(255,247,230,.56);
   }
 
   .hero-content {
