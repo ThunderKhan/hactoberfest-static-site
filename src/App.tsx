@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { EVENT, FAQS, PATHS, SCHEDULE, TICKER, TOOLKIT } from "./event";
+import { InteractiveSurface } from "./components/InteractiveSurface";
 import { LocationMap } from "./components/LocationMap";
 
 function Spark({ size = 18 }: { size?: number }) {
@@ -159,10 +160,10 @@ function App() {
 
         <section className="fact-strip">
           <div className="container fact-grid reveal">
-            <div><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></div>
-            <div><small>WHEN</small><strong>OCT 2026</strong><span>Exact date TBA</span></div>
-            <div><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></div>
-            <div><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></div>
+            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></InteractiveSurface>
+            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHEN</small><strong>OCT 2026</strong><span>Exact date TBA</span></InteractiveSurface>
+            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></InteractiveSurface>
+            <InteractiveSurface className="fact-cell" strength={2} lift={3}><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></InteractiveSurface>
           </div>
         </section>
 
@@ -179,13 +180,15 @@ function App() {
             </div>
           </div>
 
-          <div className="container manifesto reveal">
-            <div className="manifesto-number">01</div>
-            <div className="manifesto-text">
-              <small>THE BRIEF</small>
-              <p>Build something <em>open enough to learn from</em> and useful enough that somebody else would want to try it.</p>
-            </div>
-            <div className="manifesto-badge">BUILD<br />IN PUBLIC</div>
+          <div className="container reveal manifesto-wrap">
+            <InteractiveSurface className="manifesto" strength={2.5} lift={5}>
+              <div className="manifesto-number">01</div>
+              <div className="manifesto-text">
+                <small>THE BRIEF</small>
+                <p>Build something <em>open enough to learn from</em> and useful enough that somebody else would want to try it.</p>
+              </div>
+              <div className="manifesto-badge">BUILD<br />IN PUBLIC</div>
+            </InteractiveSurface>
           </div>
         </section>
 
@@ -193,13 +196,13 @@ function App() {
           <div className="container">
             <SectionHead light eyebrow="CHOOSE YOUR LANE" title="Four ways to have a good Hack Day." copy="You do not have to fit a single hackathon stereotype. Pick the lane that gives you the most learning per hour." />
             <div className="path-grid">
-              {PATHS.map((path, i) => (
-                <article className="path-card reveal" style={{ "--delay": `${i * 70}ms` } as CSSProperties} key={path.index}>
+              {PATHS.map(path => (
+                <InteractiveSurface className="path-card" strength={5} lift={10} key={path.index}>
                   <div className="path-top"><span>{path.index}</span><b>{path.tag}</b></div>
                   <h3>{path.title}</h3>
                   <p>{path.copy}</p>
                   <div className="path-arrow"><Arrow direction="up-right" /></div>
-                </article>
+                </InteractiveSurface>
               ))}
             </div>
           </div>
@@ -218,11 +221,11 @@ function App() {
                 <article className="timeline-row reveal" style={{ "--delay": `${i * 55}ms` } as CSSProperties} key={item.time + item.title}>
                   <time>{item.time}</time>
                   <div className="timeline-dot" />
-                  <div className="timeline-card">
+                  <InteractiveSurface className="timeline-card" strength={3.5} lift={6}>
                     <small>{item.eyebrow}</small>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
-                  </div>
+                  </InteractiveSurface>
                 </article>
               ))}
             </div>
@@ -231,9 +234,11 @@ function App() {
 
         <section className="section toolkit-section" id="toolkit">
           <div className="container toolkit-layout">
-            <div className="toolkit-console reveal" aria-label="Open source starter checklist">
-              <div className="console-bar"><span /><span /><span /><b>starter-kit.md</b></div>
-              <pre>{`# before you arrive\n\n$ git --version\n$ github-account: ready\n$ laptop-charge: 100%\n$ curiosity: required\n\n# during the day\n- ask questions early\n- commit often\n- document decisions\n- help somebody else\n- ship before polishing\n\n> open source is a conversation.`}</pre>
+            <div className="reveal">
+              <InteractiveSurface className="toolkit-console" strength={3} lift={7} ariaLabel="Open source starter checklist">
+                <div className="console-bar"><span /><span /><span /><b>starter-kit.md</b></div>
+                <pre>{`# before you arrive\n\n$ git --version\n$ github-account: ready\n$ laptop-charge: 100%\n$ curiosity: required\n\n# during the day\n- ask questions early\n- commit often\n- document decisions\n- help somebody else\n- ship before polishing\n\n> open source is a conversation.`}</pre>
+              </InteractiveSurface>
             </div>
             <div className="toolkit-copy reveal">
               <div className="eyebrow"><Spark size={13} /> STARTER KIT</div>
@@ -251,11 +256,13 @@ function App() {
         <section className="section rewards-section" id="swag">
           <div className="container rewards-grid">
             <div className="rewards-word reveal"><span>SWAG</span><em>&</em><span>REWARDS</span></div>
-            <div className="rewards-copy reveal">
-              <p className="lead">Fun stuff, without fake promises.</p>
-              <p>Official Hacktoberfest event swag and partner rewards may be available, but quantities depend on the allocation received. The website will only promise what is actually locked.</p>
-              <div className="reward-chips"><span>EVENT SWAG*</span><span>PROJECT RECOGNITION</span><span>COMMUNITY</span><span>REAL DEMO</span></div>
-              <small>*Subject to organizer allocation and on-site availability.</small>
+            <div className="reveal">
+              <InteractiveSurface className="rewards-copy rewards-panel" strength={2.5} lift={5}>
+                <p className="lead">Fun stuff, without fake promises.</p>
+                <p>Official Hacktoberfest event swag and partner rewards may be available, but quantities depend on the allocation received. The website will only promise what is actually locked.</p>
+                <div className="reward-chips"><span>EVENT SWAG*</span><span>PROJECT RECOGNITION</span><span>COMMUNITY</span><span>REAL DEMO</span></div>
+                <small>*Subject to organizer allocation and on-site availability.</small>
+              </InteractiveSurface>
             </div>
           </div>
         </section>
@@ -285,7 +292,7 @@ function App() {
             </div>
             <div className="faq-list reveal">
               {FAQS.map(([q, a], i) => (
-                <div className={`faq-item${openFaq === i ? " open" : ""}`} key={q}>
+                <div className={`faq-item interactive-accordion${openFaq === i ? " open" : ""}`} key={q}>
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}>
                     <span>{String(i + 1).padStart(2, "0")}</span><strong>{q}</strong><i>{openFaq === i ? "−" : "+"}</i>
                   </button>
