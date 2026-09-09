@@ -15,6 +15,9 @@ interface LocationMapProps {
   className?: string;
 }
 
+const horizontalRoads = [18, 35, 52, 68, 84];
+const verticalRoads = [14, 31, 48, 67, 84];
+
 export function LocationMap({
   location = "Institute of Engineering & Technology (IET), DDUGU",
   coordinates = "Gorakhpur · Uttar Pradesh · India",
@@ -27,19 +30,16 @@ export function LocationMap({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useTransform(mouseY, [-80, 80], [5, -5]);
-  const rotateY = useTransform(mouseX, [-80, 80], [-5, 5]);
-
+  const rotateX = useTransform(mouseY, [-90, 90], [5.5, -5.5]);
+  const rotateY = useTransform(mouseX, [-90, 90], [-5.5, 5.5]);
   const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 });
   const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
+    mouseX.set(e.clientX - (rect.left + rect.width / 2));
+    mouseY.set(e.clientY - (rect.top + rect.height / 2));
   };
 
   const handleMouseLeave = () => {
@@ -47,6 +47,8 @@ export function LocationMap({
     mouseY.set(0);
     setIsHovered(false);
   };
+
+  const toggle = () => setIsExpanded(v => !v);
 
   return (
     <motion.div
@@ -56,7 +58,7 @@ export function LocationMap({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onClick={() => setIsExpanded(v => !v)}
+      onClick={toggle}
       role="button"
       tabIndex={0}
       aria-expanded={isExpanded}
@@ -64,7 +66,7 @@ export function LocationMap({
       onKeyDown={e => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setIsExpanded(v => !v);
+          toggle();
         }
       }}
     >
@@ -76,57 +78,102 @@ export function LocationMap({
           transformStyle: "preserve-3d",
         }}
         animate={{
-          width: isExpanded ? "100%" : "86%",
-          height: isExpanded ? 430 : 285,
+          width: isExpanded ? "100%" : "96%",
+          height: isExpanded ? 470 : 350,
+          y: isHovered ? -5 : 0,
         }}
         transition={{ type: "spring", stiffness: 360, damping: 34 }}
       >
         <div className="location-map-glow" />
 
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              className="location-map-expanded"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-            >
-              <svg className="location-map-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <motion.line x1="0" y1="35" x2="100" y2="35" className="road-main" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, delay: 0.14 }} />
-                <motion.line x1="0" y1="66" x2="100" y2="66" className="road-main" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, delay: 0.22 }} />
-                <motion.line x1="30" y1="0" x2="30" y2="100" className="road-mid" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.55, delay: 0.3 }} />
-                <motion.line x1="70" y1="0" x2="70" y2="100" className="road-mid" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.55, delay: 0.38 }} />
-                {[20, 50, 80].map((y, i) => (
-                  <motion.line key={`h-${i}`} x1="0" y1={y} x2="100" y2={y} className="road-minor" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.45, delay: 0.48 + i * 0.06 }} />
-                ))}
-                {[15, 45, 55, 85].map((x, i) => (
-                  <motion.line key={`v-${i}`} x1={x} y1="0" x2={x} y2="100" className="road-minor" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.45, delay: 0.56 + i * 0.06 }} />
-                ))}
-              </svg>
+        <motion.div
+          className="location-map-canvas"
+          animate={{ opacity: isExpanded ? 1 : 0.92, scale: isExpanded ? 1.015 : 1 }}
+          transition={{ duration: 0.35 }}
+        >
+          <svg className="location-map-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            {horizontalRoads.map((y, i) => (
+              <motion.line
+                key={`h-${y}`}
+                x1="0"
+                y1={y}
+                x2="100"
+                y2={y}
+                className={i === 1 || i === 3 ? "road-main" : "road-minor"}
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.65, delay: 0.05 + i * 0.045 }}
+              />
+            ))}
+            {verticalRoads.map((x, i) => (
+              <motion.line
+                key={`v-${x}`}
+                x1={x}
+                y1="0"
+                x2={x}
+                y2="100"
+                className={i === 1 || i === 3 ? "road-mid" : "road-minor"}
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.58, delay: 0.12 + i * 0.045 }}
+              />
+            ))}
+            <motion.path
+              d="M-5 78 C18 66 29 88 50 73 S79 57 106 69"
+              className="road-curve"
+              fill="none"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1.1, delay: 0.16 }}
+            />
+          </svg>
 
-              <motion.div className="map-building building-a" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.38 }} />
-              <motion.div className="map-building building-b" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.46 }} />
-              <motion.div className="map-building building-c" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.54 }} />
-              <motion.div className="map-building building-d" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.43 }} />
-              <motion.div className="map-building building-e" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5 }} />
+          <div className="map-building building-a" />
+          <div className="map-building building-b" />
+          <div className="map-building building-c" />
+          <div className="map-building building-d" />
+          <div className="map-building building-e" />
+          <div className="map-building building-f" />
+          <div className="map-building building-g" />
 
+          <span className="map-district district-a">CIVIL LINES</span>
+          <span className="map-district district-b">DDUGU</span>
+          <span className="map-district district-c">GORAKHPUR</span>
+
+          <motion.div
+            className="location-map-pin"
+            animate={{
+              y: isHovered ? -4 : 0,
+              scale: isExpanded ? 1.08 : 1,
+            }}
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
+          >
+            <span className="location-map-pin-ring" />
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Z" fill="currentColor" />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+          </motion.div>
+
+          <AnimatePresence>
+            {isExpanded && (
               <motion.div
-                className="location-map-pin"
-                initial={{ scale: 0, y: -18 }}
-                animate={{ scale: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 420, damping: 20, delay: 0.22 }}
+                className="map-expanded-details"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
               >
-                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Z" fill="currentColor" />
-                  <circle cx="12" cy="9" r="2.5" />
-                </svg>
+                <span className="map-node node-a" />
+                <span className="map-node node-b" />
+                <span className="map-node node-c" />
+                <span className="map-node node-d" />
+                <span className="map-route-label">CAMPUS ROUTE</span>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
+        </motion.div>
 
-        <motion.div className="location-map-grid" animate={{ opacity: isExpanded ? 0 : 1 }} transition={{ duration: 0.25 }} />
+        <div className="location-map-grid" />
 
         <div className="location-map-content">
           <div className="location-map-topline">
@@ -141,8 +188,9 @@ export function LocationMap({
               strokeLinejoin="round"
               className="location-map-icon"
               animate={{
-                opacity: isExpanded ? 0 : 1,
-                filter: isHovered ? "drop-shadow(0 0 10px rgba(255,213,41,.62))" : "drop-shadow(0 0 4px rgba(255,213,41,.25))",
+                filter: isHovered
+                  ? "drop-shadow(0 0 10px rgba(255,213,41,.72))"
+                  : "drop-shadow(0 0 4px rgba(255,213,41,.3))",
               }}
             >
               <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
@@ -152,7 +200,7 @@ export function LocationMap({
 
             <motion.div className="location-map-status" animate={{ scale: isHovered ? 1.04 : 1 }}>
               <i />
-              <span>Campus</span>
+              <span>Campus map</span>
             </motion.div>
           </div>
 
@@ -160,20 +208,29 @@ export function LocationMap({
             <motion.h3 animate={{ x: isHovered ? 4 : 0 }} transition={{ type: "spring", stiffness: 380, damping: 25 }}>
               {location}
             </motion.h3>
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22 }}>
-                  {coordinates}
-                </motion.p>
-              )}
-            </AnimatePresence>
-            <motion.div className="location-map-underline" initial={{ scaleX: 0.24 }} animate={{ scaleX: isHovered || isExpanded ? 1 : 0.24 }} transition={{ duration: 0.35 }} />
+            <motion.p
+              animate={{ opacity: isExpanded ? 0.88 : 0.62, y: isExpanded ? 0 : 2 }}
+              transition={{ duration: 0.22 }}
+            >
+              {coordinates}
+            </motion.p>
+            <motion.div
+              className="location-map-underline"
+              initial={{ scaleX: 0.24 }}
+              animate={{ scaleX: isHovered || isExpanded ? 1 : 0.32 }}
+              transition={{ duration: 0.35 }}
+            />
           </div>
         </div>
       </motion.div>
 
-      <motion.p className="location-map-hint" initial={{ opacity: 0 }} animate={{ opacity: isHovered && !isExpanded ? 1 : 0, y: isHovered ? 0 : 4 }} transition={{ duration: 0.18 }}>
-        Click to expand
+      <motion.p
+        className="location-map-hint"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 4 }}
+        transition={{ duration: 0.18 }}
+      >
+        {isExpanded ? "Click to collapse" : "Click to expand"}
       </motion.p>
     </motion.div>
   );
