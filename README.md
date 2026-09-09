@@ -2,6 +2,11 @@
 
 A Vite + React + TypeScript landing page for the DDUGU Hacktoberfest Hack Day.
 
+## Requirements
+
+- Node.js 22 recommended (`.nvmrc` is included)
+- npm
+
 ## Run locally
 
 ```bash
@@ -11,14 +16,19 @@ npm run dev
 
 Vite will print the local URL (usually `http://localhost:5173`).
 
-## Production build
+## Check before shipping
 
 ```bash
-npm run build
-npm run preview
+npm run check
 ```
 
-The production bundle is written to `dist/`.
+`npm run check` runs the TypeScript project build and the Vite production build. The production bundle is written to `dist/`.
+
+To inspect the production bundle locally:
+
+```bash
+npm run preview
+```
 
 ## Deploy to Vercel
 
@@ -47,17 +57,32 @@ registrationUrl: "https://...",
 
 All registration CTAs will then point to it. The same file also contains the date, venue, schedule, build paths, FAQ, and starter-kit copy.
 
+## Design source of truth
+
+- `DESIGN.md` documents the current **Midnight Commons** visual system and its guardrails.
+- `.impeccable/design.json` contains machine-readable extensions for motion, breakpoints, depth, and narrative rules.
+- `src/styles/14-production-system.css` is the final production override layer for responsive behavior, accessibility, typography, and motion hierarchy.
+
+When changing the UI, preserve the core design rule: **hero = spectacle, content = calm, real interactions = tactile**.
+
 ## Main visual files
 
 - `src/styles.css` — stylesheet entry point.
-- `src/styles/` — layout, colors, hero, section, and responsive styles.
-- `public/hero-bg/` — the optimized flower-valley hero image stored as base64 payload chunks.
+- `src/styles/` — layout, colors, hero, section, interaction, and responsive styles.
+- `public/hero-bg/` — the flower-valley hero image stored as base64 payload chunks.
 - `public/hero-landscape.svg` — lightweight illustrated fallback while the hero image loads.
 - `public/favicon.svg` — site favicon.
 - `public/og.svg` — social preview artwork.
 
-The hero payload is assembled by `src/main.tsx` in the browser and assigned to the `--hero-bg-image` CSS variable. This keeps the image self-contained in the repository while preserving the exact visual reference used for the hero.
+The hero payload is assembled by `src/main.tsx` in the browser and assigned to the `--hero-bg-image` CSS variable. The production stylesheet uses that variable as the source of truth, with `public/hero-landscape.svg` as a fallback if the custom payload cannot load.
 
-## Design direction
+## Accessibility and motion
 
-The site combines event-site utility — ticker, cream navigation, outlined/offset buttons, pills, schedule, FAQ, venue, and registration CTAs — with the darker editorial flower-field aesthetic used in the hero.
+- A skip link and visible keyboard focus states are included.
+- The campus map supports mouse, touch, Enter, and Space.
+- `prefers-reduced-motion` removes spatial tilt/drawing effects while preserving meaningful state feedback.
+- The terminal typewriter is visual-only for assistive technology; screen readers receive the complete static terminal text once.
+
+## Continuous integration
+
+GitHub Actions runs the same production check on pushes and pull requests to `main`.
