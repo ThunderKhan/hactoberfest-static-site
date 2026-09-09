@@ -1,6 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { EVENT, FAQS, PATHS, SCHEDULE, TICKER, TOOLKIT } from "./event";
-import { LocationMap } from "./components/LocationMap";
+
+const LazyLocationMap = lazy(async () => {
+  const module = await import("./components/LocationMap");
+  return { default: module.LocationMap };
+});
 
 const TERMINAL_SCRIPT = `# before you arrive
 
@@ -156,6 +160,55 @@ function TypewriterTerminal({ text, speed = 18, startDelay = 280 }: { text: stri
   );
 }
 
+function MapPlaceholder() {
+  return (
+    <div className="map-placeholder" aria-hidden="true">
+      <span className="map-placeholder-road road-one" />
+      <span className="map-placeholder-road road-two" />
+      <span className="map-placeholder-road road-three" />
+      <span className="map-placeholder-pin" />
+    </div>
+  );
+}
+
+function DeferredLocationMap({ location, coordinates }: { location: string; coordinates: string }) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (shouldLoad || !hostRef.current) return;
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "500px 0px" },
+    );
+
+    observer.observe(hostRef.current);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  return (
+    <div ref={hostRef} className="deferred-map-shell">
+      {shouldLoad ? (
+        <Suspense fallback={<MapPlaceholder />}>
+          <LazyLocationMap location={location} coordinates={coordinates} />
+        </Suspense>
+      ) : (
+        <MapPlaceholder />
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -194,8 +247,9 @@ function App() {
     <div className="site-shell">
       <a className="skip-link" href="#main-content">Skip to main content</a>
 
-      <div className="ticker" aria-label="Event highlights">
-        <div className="ticker-track">
+      <div className="ticker" role="region" aria-label="Event highlights">
+        <span className="sr-only">{TICKER.join(" · ")}</span>
+        <div className="ticker-track" aria-hidden="true">
           {doubledTicker.map((item, i) => (
             <span key={`${item}-${i}`}>{item}<Spark size={11} /></span>
           ))}
@@ -348,7 +402,7 @@ function App() {
 
         <section className="section rewards-section" id="swag">
           <div className="container rewards-grid">
-            <div className="rewards-word reveal"><span>SWAG</span><em>&</em><span>REWARDS</span></div>
+            <h2 className="rewards-word reveal"><span>SWAG</span><em>&</em><span>REWARDS</span></h2>
             <div className="reveal rewards-copy rewards-panel">
               <p className="lead">Fun stuff, without fake promises.</p>
               <p>Official Hacktoberfest event swag and partner rewards may be available, but quantities depend on the allocation received. The website will only promise what is actually locked.</p>
@@ -361,7 +415,7 @@ function App() {
         <section className="section venue-section" id="venue">
           <div className="container venue-grid">
             <div className="venue-map-wrap reveal">
-              <LocationMap location="IET · DDUGU" coordinates="Civil Lines · Gorakhpur · Uttar Pradesh" />
+              <DeferredLocationMap location="IET · DDUGU" coordinates="Civil Lines · Gorakhpur · Uttar Pradesh" />
             </div>
             <div className="venue-copy reveal">
               <div className="eyebrow"><Spark size={13} /> WHERE WE BUILD</div>
@@ -382,14 +436,18 @@ function App() {
               <p>If something important is missing here, that probably means we have not locked it yet.</p>
             </div>
             <div className="faq-list reveal">
-              {FAQS.map(([q, a], i) => (
-                <div className={`faq-item interactive-accordion${openFaq === i ? " open" : ""}`} key={q}>
-                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}>
-                    <span>{String(i + 1).padStart(2, "0")}</span><strong>{q}</strong><i>{openFaq === i ? "−" : "+"}</i>
-                  </button>
-                  <div className="faq-answer"><p>{a}</p></div>
-                </div>
-              ))}
+              {FAQS.map(([q, a], i) => {
+                const questionId = `faq-question-${i}`;
+                const answerId = `faq-answer-${i}`;
+                return (
+                  <div className={`faq-item interactive-accordion${openFaq === i ? " open" : ""}`} key={q}>
+                    <button id={questionId} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i} aria-controls={answerId}>
+                      <span>{String(i + 1).padStart(2, "0")}</span><strong>{q}</strong><i>{openFaq === i ? "−" : "+"}</i>
+                    </button>
+                    <div id={answerId} className="faq-answer" role="region" aria-labelledby={questionId}><p>{a}</p></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
