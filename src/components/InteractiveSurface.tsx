@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, MouseEvent, ReactNode } from "react";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
@@ -28,7 +28,7 @@ export function InteractiveSurface({
   const rotateX = useSpring(rotateXRaw, { stiffness: 320, damping: 28, mass: 0.55 });
   const rotateY = useSpring(rotateYRaw, { stiffness: 320, damping: 28, mass: 0.55 });
 
-  const handleMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMove = (event: MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width;
@@ -58,7 +58,7 @@ export function InteractiveSurface({
         transformStyle: "preserve-3d",
         "--mx": "50%",
         "--my": "50%",
-      } as CSSProperties}
+      } as never}
       onMouseMove={handleMove}
       onMouseLeave={reset}
       whileHover={{ y: -lift, scale: 1.008 }}
