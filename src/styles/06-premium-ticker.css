@@ -1,0 +1,113 @@
+.site-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-shell > .navbar { order: 1; }
+.site-shell > main { order: 2; }
+.site-shell > .ticker { order: 3; }
+.site-shell > .footer { order: 4; }
+.site-shell > .top-button { order: 5; }
+
+/* The event ticker belongs near the end of the experience, not above the nav. */
+.ticker {
+  width: 100%;
+  height: 76px;
+  background: var(--yellow);
+  color: var(--ink);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+.ticker::before,
+.ticker::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(30px, 5vw, 88px);
+  pointer-events: none;
+}
+
+.ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--yellow) 15%, rgba(255, 213, 41, 0));
+}
+
+.ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--yellow) 15%, rgba(255, 213, 41, 0));
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  min-width: 100%;
+  animation: ticker 38s linear infinite;
+  will-change: transform;
+}
+
+.ticker-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 38px;
+  padding: 0 48px;
+  font-size: clamp(16px, 1.2vw, 20px);
+  line-height: 1;
+  letter-spacing: .065em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ticker-track svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  fill: var(--orange);
+}
+
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 860px) {
+  .ticker {
+    height: 62px;
+  }
+
+  .ticker-track {
+    animation-duration: 32s;
+  }
+
+  .ticker-track span {
+    gap: 26px;
+    padding: 0 30px;
+    font-size: 14px;
+    letter-spacing: .055em;
+  }
+
+  .ticker-track svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ticker {
+    height: 56px;
+  }
+
+  .ticker-track span {
+    gap: 22px;
+    padding: 0 24px;
+    font-size: 13px;
+  }
+}
