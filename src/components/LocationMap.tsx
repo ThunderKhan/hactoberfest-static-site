@@ -38,7 +38,7 @@ export function LocationMap({
   const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (reduceMotion || !containerRef.current) return;
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     mouseX.set(e.clientX - (rect.left + rect.width / 2));
     mouseY.set(e.clientY - (rect.top + rect.height / 2));
@@ -66,7 +66,7 @@ export function LocationMap({
       role="button"
       tabIndex={0}
       aria-expanded={isExpanded}
-      aria-label={`${location}. ${isExpanded ? "Collapse" : "Expand"} campus map.`}
+      aria-label={`${location}. Decorative campus illustration, not a navigation map. ${isExpanded ? "Hide" : "Show"} details.`}
       onKeyDown={e => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -82,8 +82,6 @@ export function LocationMap({
           transformStyle: "preserve-3d",
         }}
         animate={{
-          width: isExpanded ? "100%" : "96%",
-          height: isExpanded ? 470 : 350,
           y: reduceMotion ? 0 : isHovered ? -5 : 0,
         }}
         transition={springTransition}
@@ -104,8 +102,8 @@ export function LocationMap({
                 x2="100"
                 y2={y}
                 className={i === 1 || i === 3 ? "road-main" : "road-minor"}
-                initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={reduceMotion ? { duration: 0 } : { duration: 0.65, delay: 0.05 + i * 0.045 }}
               />
             ))}
@@ -117,8 +115,8 @@ export function LocationMap({
                 x2={x}
                 y2="100"
                 className={i === 1 || i === 3 ? "road-mid" : "road-minor"}
-                initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={reduceMotion ? { duration: 0 } : { duration: 0.58, delay: 0.12 + i * 0.045 }}
               />
             ))}
@@ -126,8 +124,8 @@ export function LocationMap({
               d="M-5 78 C18 66 29 88 50 73 S79 57 106 69"
               className="road-curve"
               fill="none"
-              initial={reduceMotion ? false : { pathLength: 0 }}
-              animate={{ pathLength: 1 }}
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 1.1, delay: 0.16 }}
             />
           </svg>
@@ -172,7 +170,7 @@ export function LocationMap({
                 <span className="map-node node-b" />
                 <span className="map-node node-c" />
                 <span className="map-node node-d" />
-                <span className="map-route-label">CAMPUS ROUTE</span>
+                <span className="map-route-label">ILLUSTRATIVE ROUTE</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -192,13 +190,7 @@ export function LocationMap({
               strokeLinecap="round"
               strokeLinejoin="round"
               className="location-map-icon"
-              animate={{
-                filter: reduceMotion
-                  ? "drop-shadow(0 0 4px rgba(255,213,41,.3))"
-                  : isHovered
-                    ? "drop-shadow(0 0 10px rgba(255,213,41,.72))"
-                    : "drop-shadow(0 0 4px rgba(255,213,41,.3))",
-              }}
+
             >
               <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
               <line x1="9" x2="9" y1="3" y2="18" />
@@ -207,7 +199,7 @@ export function LocationMap({
 
             <motion.div className="location-map-status" animate={{ scale: reduceMotion ? 1 : isHovered ? 1.04 : 1 }}>
               <i />
-              <span>Campus map</span>
+              <span>Campus illustration</span>
             </motion.div>
           </div>
 
@@ -216,7 +208,7 @@ export function LocationMap({
               {location}
             </motion.h3>
             <motion.p
-              animate={{ opacity: isExpanded ? 0.88 : 0.62, y: reduceMotion ? 0 : isExpanded ? 0 : 2 }}
+              animate={{ opacity: 1, y: reduceMotion ? 0 : isExpanded ? 0 : 2 }}
               transition={{ duration: reduceMotion ? 0.1 : 0.22 }}
             >
               {coordinates}
@@ -234,10 +226,10 @@ export function LocationMap({
       <motion.p
         className="location-map-hint"
         initial={false}
-        animate={{ opacity: reduceMotion ? 1 : isHovered ? 1 : 0, y: reduceMotion ? 0 : isHovered ? 0 : 4 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: reduceMotion ? 0.1 : 0.18 }}
       >
-        {isExpanded ? "Click to collapse" : "Click to expand"}
+        {isExpanded ? "Hide illustration details" : "Show illustration details"}
       </motion.p>
     </motion.div>
   );

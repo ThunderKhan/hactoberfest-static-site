@@ -19,7 +19,7 @@ body { background: var(--cinema-bg); color: var(--cream); }
 }
 .hero-title span { text-shadow: 0 2px 11px rgba(0,0,0,.36); }
 .hero-copy { color: rgba(255,247,230,.96); text-shadow: 0 2px 12px rgba(0,0,0,.52); }
-.hero-pills span { background: rgba(6,8,19,.52); backdrop-filter: blur(9px); }
+.hero-pills span { background: rgba(6,8,19,.52);  }
 
 /* About */
 .cream-section {
@@ -244,7 +244,7 @@ body { background: var(--cinema-bg); color: var(--cream); }
   border: 1px solid rgba(240,198,65,.55);
   border-radius: 50%;
   transform: translate(-50%,-50%);
-  animation: mapPulse 2.4s ease-out infinite;
+  animation: mapPulse 2.4s var(--motion-ease) 2;
 }
 @keyframes mapPulse {
   0% { opacity: .62; transform: translate(-50%,-50%) scale(.72); }
@@ -312,7 +312,7 @@ body { background: var(--cinema-bg); color: var(--cream); }
   font: 500 9px/1 var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
-  backdrop-filter: blur(10px);
+
 }
 .location-map-status i {
   width: 7px;

@@ -6,7 +6,7 @@
 .interactive-accordion {
   position: relative;
   overflow: hidden;
-  transition: background .22s ease, border-color .22s ease;
+  transition: background .22s var(--motion-ease), border-color .22s var(--motion-ease);
 }
 .interactive-accordion::before {
   content: "";
@@ -15,13 +15,13 @@
   pointer-events: none;
   opacity: 0;
   background: linear-gradient(90deg, rgba(240,198,65,.05), transparent 62%);
-  transition: opacity .22s ease;
+  transition: opacity .22s var(--motion-ease);
 }
 .interactive-accordion:hover::before,
 .interactive-accordion.open::before { opacity: 1; }
 .interactive-accordion:hover { border-color: rgba(240,198,65,.24); }
 .interactive-accordion button strong,
-.interactive-accordion button i { transition: transform .2s cubic-bezier(.16,1,.3,1), color .2s ease; }
+.interactive-accordion button i { transition: transform .2s cubic-bezier(.16,1,.3,1), color .2s var(--motion-ease); }
 .interactive-accordion:hover button strong { transform: translateX(4px); }
 .interactive-accordion:hover button i { color: #ffe36b; }
 
@@ -29,7 +29,7 @@
 .button .arrow-icon { transition: transform .2s cubic-bezier(.16,1,.3,1); }
 .button:hover .arrow-icon { transform: translateX(3px); }
 .button-ghost:hover .arrow-icon { transform: translateY(2px); }
-.hero-pills span { transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.hero-pills span { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease), color .2s var(--motion-ease); }
 .hero-pills span:hover { background: rgba(10,12,25,.7); border-color: #ffe36b; }
 
 /* Informational surfaces stay calm. */
@@ -43,7 +43,7 @@
 .fact-cell,
 .manifesto { transform: none; will-change: auto; }
 
-.path-card { transition: background .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.path-card { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease), box-shadow .2s var(--motion-ease); }
 .path-card:hover {
   color: var(--cream);
   background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
@@ -53,14 +53,14 @@
 .path-card:hover p { color: rgba(255,247,230,.72); }
 .path-card:hover .path-top span { color: var(--cinema-gold); }
 
-.timeline-card { transition: background .2s ease, border-color .2s ease; }
+.timeline-card { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease); }
 .timeline-card:hover {
   background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
   border-color: rgba(240,198,65,.28);
 }
 .timeline-row:hover time { color: var(--cinema-gold); }
 
-.toolkit-console { transition: border-color .2s ease, box-shadow .2s ease; }
+.toolkit-console { transition: border-color .2s var(--motion-ease), box-shadow .2s var(--motion-ease); }
 .toolkit-console:hover { border-color: rgba(255,247,230,.18); box-shadow: 0 28px 70px rgba(0,0,0,.30); }
 .tool-row:hover { background: transparent; }
 .reward-chips span:hover { box-shadow: inset 0 0 0 1px rgba(240,198,65,.12); }
