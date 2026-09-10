@@ -7,12 +7,12 @@
 }
 
 .hero-landscape {
-  animation: openingLandscapeIn 1.45s cubic-bezier(.16,1,.3,1) both;
+  animation: openingLandscapeIn 1.45s var(--motion-ease-confident) both;
   transform-origin: 50% 54%;
 }
 
 .hero .hero-title {
-  animation: openingTitleIn .88s cubic-bezier(.16,1,.3,1) .24s both;
+  animation: openingTitleIn .88s var(--motion-ease-confident) .24s both;
   transform-origin: center bottom;
 }
 
@@ -20,7 +20,7 @@
 .hero .hero-kicker,
 .hero .hero-copy,
 .hero .hero-actions {
-  animation: openingSoftRise .72s cubic-bezier(.16,1,.3,1) .52s both;
+  animation: openingSoftRise .72s var(--motion-ease-confident) .52s both;
 }
 
 .hero-actions .button {

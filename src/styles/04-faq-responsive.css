@@ -31,8 +31,8 @@
 .top-button {
   position: fixed;
   z-index: var(--layer-control);
-  right: 20px;
-  bottom: 20px;
+  right: max(20px, calc(var(--safe-area-right) + 10px));
+  bottom: max(20px, calc(var(--safe-area-bottom) + 10px));
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -49,7 +49,6 @@
 .top-button.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
 @media (max-width: 1100px) {
-  .desktop-links { gap: 18px; margin-right: 8px; }
   .editorial-grid, .schedule-layout, .toolkit-layout, .venue-grid, .faq-layout { gap: 55px; }
   .path-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .path-card:nth-child(2) { border-right: 0; }
@@ -60,8 +59,6 @@
 
 @media (max-width: 860px) {
   .container { width: min(100% - 32px, var(--container)); }
-  .desktop-links, .desktop-register { display: none; }
-  .menu-button { display: flex; }
   .section { padding: 82px 0; }
   .editorial-grid, .schedule-layout, .toolkit-layout, .rewards-grid, .venue-grid, .faq-layout { grid-template-columns: 1fr; }
   .editorial-grid { gap: 35px; }
@@ -76,25 +73,16 @@
 }
 
 @media (max-width: 560px) {
-  .container { width: min(100% - 24px, var(--container)); }
-  .mobile-menu { padding-inline: 12px; }
-  .hero-pills { gap: 7px; }
-  .hero-pills span { padding: 7px 10px; }
-  .hero-actions { gap: 12px; }
   .button { width: 100%; max-width: 330px; }
-  .section { padding: 68px 0; }
   .editorial-copy h2 { font-size: 53px; }
   .inline-note { align-items: flex-start; flex-wrap: wrap; }
   .inline-note i { display: none; }
   .section-head h2, .schedule-intro h2, .toolkit-copy h2, .venue-copy h2 { font-size: 49px; }
-  .path-grid { grid-template-columns: 1fr; }
-  .path-card { border-right: 0; border-bottom: 1px solid rgba(255,247,230,.18); min-height: 300px; }
+  .path-card { border-right: 0; border-bottom: 1px solid rgba(255,247,230,.18); }
   .path-card:last-child { border-bottom: 0; }
-  .rewards-word { font-size: 70px; }
   .faq-heading h2 { font-size: 61px; }
   .faq-item button { grid-template-columns: 32px minmax(0,1fr) 24px; gap: 9px; }
   .faq-answer p { margin-left: 41px; margin-right: 8px; }
-  .register-inner h2 { font-size: 61px; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer p { grid-column: auto; }
 }
