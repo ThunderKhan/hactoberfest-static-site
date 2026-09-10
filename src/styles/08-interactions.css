@@ -29,10 +29,8 @@
 .button .arrow-icon { transition: transform .2s cubic-bezier(.16,1,.3,1); }
 .button:hover .arrow-icon { transform: translateX(3px); }
 .button-ghost:hover .arrow-icon { transform: translateY(2px); }
-.hero-pills span { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease), color .2s var(--motion-ease); }
-.hero-pills span:hover { background: rgba(10,12,25,.7); border-color: #ffe36b; }
 
-/* Informational surfaces stay calm. */
+/* Informational surfaces stay calm and never imply clickability. */
 .path-card,
 .timeline-card,
 .toolkit-console,
@@ -41,30 +39,8 @@
 .reward-chips span,
 .inline-note span,
 .fact-cell,
-.manifesto { transform: none; will-change: auto; }
-
-.path-card { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease), box-shadow .2s var(--motion-ease); }
-.path-card:hover {
-  color: var(--cream);
-  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
-  border-color: rgba(240,198,65,.30);
-  box-shadow: inset 0 0 0 1px rgba(240,198,65,.08);
-}
-.path-card:hover p { color: rgba(255,247,230,.72); }
-.path-card:hover .path-top span { color: var(--cinema-gold); }
-
-.timeline-card { transition: background .2s var(--motion-ease), border-color .2s var(--motion-ease); }
-.timeline-card:hover {
-  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  border-color: rgba(240,198,65,.28);
-}
-.timeline-row:hover time { color: var(--cinema-gold); }
-
-.toolkit-console { transition: border-color .2s var(--motion-ease), box-shadow .2s var(--motion-ease); }
-.toolkit-console:hover { border-color: rgba(255,247,230,.18); box-shadow: 0 28px 70px rgba(0,0,0,.30); }
-.tool-row:hover { background: transparent; }
-.reward-chips span:hover { box-shadow: inset 0 0 0 1px rgba(240,198,65,.12); }
-.inline-note span:hover { color: var(--cream); background: rgba(255,255,255,.065); }
+.manifesto,
+.hero-pills span { transform: none; will-change: auto; }
 
 /* Signature interactive campus map */
 .location-map-card { box-shadow: 0 34px 82px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.07); }
@@ -103,21 +79,11 @@
   .interactive-accordion:hover button strong,
   .button:hover .arrow-icon,
   .button-ghost:hover .arrow-icon { transform: none; }
-  .path-card:hover,
-  .timeline-card:hover,
-  .toolkit-console:hover,
-  .tool-row:hover,
-  .reward-chips span:hover,
-  .inline-note span:hover { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .location-map-pin-ring { animation: none; opacity: .45; }
   .interactive-accordion button strong,
   .interactive-accordion button i,
-  .button .arrow-icon,
-  .hero-pills span,
-  .path-card,
-  .timeline-card,
-  .toolkit-console { transition-duration: .12s; }
+  .button .arrow-icon { transition-duration: .12s; }
 }
