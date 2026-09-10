@@ -1,0 +1,111 @@
+/* Release hardening from the September 2026 audit.
+   This layer fixes release risks without changing Midnight Commons. */
+
+/* Stop masking horizontal layout bugs at the shell level. Oversized decorative
+   layers are contained by their owning components instead. */
+.site-shell { overflow-x: visible; }
+.hero,
+.blue-section,
+.register-section,
+.ticker,
+.location-map-card,
+.map-placeholder { overflow: hidden; }
+.hero-title,
+.rewards-word,
+.manifesto,
+.toolkit-console,
+.location-map,
+.deferred-map-shell { max-width: 100%; }
+.rewards-word { overflow-wrap: anywhere; }
+
+/* Programmatic destination focus after mobile-menu navigation stays visible
+   without drawing a heavy box around the whole section. */
+section[id][tabindex="-1"]:focus-visible {
+  outline: 0;
+  box-shadow: inset 0 2px 0 rgba(240, 198, 65, .72);
+}
+
+/* Fixed UI respects notches, rounded corners and home indicators. */
+.navbar {
+  top: calc(18px + env(safe-area-inset-top, 0px));
+  padding-inline-start: env(safe-area-inset-left, 0px);
+  padding-inline-end: env(safe-area-inset-right, 0px);
+}
+
+.mobile-menu[open] {
+  inset-block-start: calc(16px + env(safe-area-inset-top, 0px));
+  inset-inline-end: calc(16px + env(safe-area-inset-right, 0px));
+  inset-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
+  inset-inline-start: calc(16px + env(safe-area-inset-left, 0px));
+  width: min(620px, calc(100% - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  height: min(740px, calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+  max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+}
+
+.top-button {
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Meaningful map metadata stays legible. */
+.location-map-status {
+  font-size: 11px;
+  line-height: 1.1;
+}
+.map-district,
+.map-route-label {
+  font-size: 11px;
+  line-height: 1.1;
+}
+.map-district { color: rgba(255,247,230,.48); }
+.district-b { color: rgba(240,198,65,.72); }
+.map-route-label { color: rgba(240,198,65,.82); }
+.location-map-hint {
+  font-size: 10px;
+  line-height: 1.2;
+  color: rgba(255,247,230,.72);
+}
+
+/* Passive metadata should not advertise clickability. */
+.hero-pills span,
+.reward-chips span,
+.inline-note span { transition: none; }
+.hero-pills span:hover {
+  color: var(--yellow);
+  background: rgba(6,8,19,.8);
+  border-color: rgba(255,213,41,.95);
+}
+.reward-chips span:hover { box-shadow: none; }
+.inline-note span:hover {
+  color: var(--cream);
+  background: rgba(255,255,255,.045);
+}
+
+/* The visible marquee action follows the pressed state while aria-pressed
+   continues to expose the state to assistive technology. */
+.ticker-control {
+  font-size: 0;
+}
+.ticker-control::before {
+  content: "Pause highlights";
+  font: 500 12px/1.3 var(--mono);
+}
+.ticker-control[aria-pressed="true"]::before {
+  content: "Resume highlights";
+}
+
+@media (max-width: 860px) {
+  .navbar { top: calc(12px + env(safe-area-inset-top, 0px)); }
+}
+
+@media (max-width: 560px) {
+  .navbar { top: calc(9px + env(safe-area-inset-top, 0px)); }
+  .location-map-status,
+  .map-district,
+  .map-route-label,
+  .location-map-hint { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section[id][tabindex="-1"]:focus-visible { scroll-behavior: auto; }
+}
