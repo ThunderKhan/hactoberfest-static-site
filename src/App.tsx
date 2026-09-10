@@ -63,8 +63,8 @@ function RegistrationButton({ nav = false, status = false }: { nav?: boolean; st
   const enabled = Boolean(EVENT.registrationUrl);
   if (status && !enabled) return <p className="registration-status">Registration coming soon</p>;
   return (
-    <Button href={enabled ? EVENT.registrationUrl : "#register"} variant="yellow">
-      {enabled ? "Register now" : nav ? "Register soon" : "Registration coming soon"}
+    <Button href={enabled ? EVENT.registrationUrl : "#register"} variant={enabled ? "yellow" : "ghost"}>
+      {enabled ? "Register now" : nav ? "Registration details" : "See registration status"}
       <span className="button-icon"><Arrow /></span>
     </Button>
   );
@@ -215,9 +215,11 @@ function App() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [showTop, setShowTop] = useState(false);
   const [tickerPaused, setTickerPaused] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   const menuRef = useRef<HTMLDialogElement>(null);
   const topSentinelRef = useRef<HTMLSpanElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotionPreference();
 
   function navigateFromMenu(id: string) {
@@ -226,9 +228,11 @@ function App() {
     requestAnimationFrame(() => {
       const target = document.getElementById(id);
       if (!target) return;
-      target.tabIndex = -1;
-      target.focus({ preventScroll: true });
+      const focusTarget = target.querySelector<HTMLElement>("h1, h2, h3") ?? target;
+      focusTarget.tabIndex = -1;
       target.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth" });
+      focusTarget.focus({ preventScroll: true });
+      focusTarget.addEventListener("blur", () => focusTarget.removeAttribute("tabindex"), { once: true });
       window.history.replaceState(null, "", `#${id}`);
     });
   }
@@ -277,13 +281,24 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting), {
+      threshold: 0,
+      rootMargin: "-112px 0px 0px 0px",
+    });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="site-shell">
       <a className="skip-link" href="#main-content">Skip to main content</a>
 
       <span ref={topSentinelRef} className="top-sentinel" aria-hidden="true" />
 
-      <nav className="navbar" aria-label="Primary navigation">
+      <nav className={`navbar${heroVisible ? "" : " navbar-content"}`} aria-label="Primary navigation">
         <div className="nav-inner">
           <a href="#top" className="brand" aria-label="Hacktoberfest DDUGU home">
             <BrandMark />
@@ -292,8 +307,8 @@ function App() {
 
           <div className="desktop-links">
             <a href="#about">About</a>
-            <a href="#schedule">Schedule</a>
             <a href="#paths">Build paths</a>
+            <a href="#schedule">Schedule</a>
             <a href="#venue">Venue</a>
             <a href="#faq">FAQ</a>
           </div>
@@ -307,14 +322,14 @@ function App() {
         </div>
         <dialog ref={menuRef} id="mobile-navigation" className="mobile-menu" aria-label="Site navigation" onCancel={() => setMenuOpen(false)} onClose={() => setMenuOpen(false)}>
           <div className="mobile-menu-heading"><span>EXPLORE THE HACK DAY</span><button className="menu-close" onClick={() => setMenuOpen(false)} aria-label="Close menu" autoFocus>×</button></div>
-          {["about", "schedule", "paths", "venue", "faq", "register"].map((id, i) => (
+          {["about", "paths", "schedule", "venue", "faq", "register"].map((id, i) => (
             <a key={id} style={{ "--delay": `${i * 45}ms` } as CSSProperties} href={`#${id}`} onClick={e => { e.preventDefault(); navigateFromMenu(id); }}>{id === "paths" ? "Build paths" : id === "faq" ? "FAQ" : id[0].toUpperCase() + id.slice(1)}</a>
           ))}
         </dialog>
       </nav>
 
       <main id="main-content" tabIndex={-1}>
-        <section className="hero" id="top">
+        <section ref={heroRef} className="hero" id="top">
           <HeroLandscape />
           <div className="hero-content container">
             <div className="hero-pills reveal visible">
@@ -330,7 +345,7 @@ function App() {
             </p>
             <div className="hero-actions reveal visible">
               <RegistrationButton />
-              <Button href="#schedule" variant="ghost">Explore schedule <span className="button-icon"><Arrow direction="down" /></span></Button>
+              <Button href="#schedule" variant={EVENT.registrationUrl ? "ghost" : "yellow"}>Explore schedule <span className="button-icon"><Arrow direction="down" /></span></Button>
             </div>
           </div>
         </section>
@@ -359,7 +374,6 @@ function App() {
 
           <div className="container reveal manifesto-wrap">
             <div className="manifesto">
-              <div className="manifesto-number">01</div>
               <div className="manifesto-text">
                 <small>THE BRIEF</small>
                 <p>Build something <em>open enough to learn from</em> and useful enough that somebody else would want to try it.</p>
@@ -495,7 +509,7 @@ function App() {
       <div className="ticker" role="region" aria-label="Event highlights" data-paused={tickerPaused}>
         <span className="sr-only">{TICKER.join(" · ")}</span>
         <div className="ticker-track" aria-hidden="true">{[...TICKER, ...TICKER].map((item, i) => <span key={`${item}-${i}`} data-copy={i >= TICKER.length}>{item}<Spark size={11} /></span>)}</div>
-        <button className="ticker-control" onClick={() => setTickerPaused(value => !value)} aria-pressed={tickerPaused}>Pause highlights</button>
+        <button className="ticker-control" onClick={() => setTickerPaused(value => !value)} aria-pressed={tickerPaused}>{tickerPaused ? "Resume highlights" : "Pause highlights"}</button>
       </div>
 
       <footer className="footer">
