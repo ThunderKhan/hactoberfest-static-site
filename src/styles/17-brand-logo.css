@@ -1,15 +1,15 @@
-/* Experimental merged Hacktoberfest × DDUGU mark in the floating navbar. */
+/* Keep the merged Hacktoberfest × DDUGU artwork intact while letting its
+   surrounding chrome belong to the Midnight Commons navy / cream / gold system. */
 .navbar .brand-mark {
   overflow: hidden;
   padding: 0;
-  border-color: rgba(81, 232, 88, .32);
+  border-color: rgba(255, 213, 41, .28);
   background:
-    #07170b
+    rgba(4, 9, 34, .42)
     url("/favicon.png")
     center / cover
     no-repeat;
   box-shadow:
-    0 0 0 1px rgba(81, 232, 88, .08),
     0 6px 16px rgba(0,0,0,.18),
     inset 0 1px 0 rgba(255,255,255,.05);
 }
@@ -19,11 +19,10 @@
 }
 
 .navbar .brand:hover .brand-mark {
-  border-color: rgba(81, 232, 88, .5);
+  border-color: rgba(255, 213, 41, .46);
   box-shadow:
-    0 0 0 1px rgba(81, 232, 88, .12),
-    0 7px 18px rgba(0,0,0,.2),
-    0 0 20px rgba(81, 232, 88, .08);
+    0 7px 18px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.07);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -40,6 +39,7 @@
   .navbar .brand-mark {
     background: Canvas;
     border-color: ButtonText;
+    box-shadow: none;
   }
 
   .navbar .brand-mark > * {
