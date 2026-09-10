@@ -1,0 +1,223 @@
+/* Constrained Apple Design Skill improvement pass.
+   Subtractive hierarchy, legibility, and accessibility refinements only. */
+
+/* Safe-area-aware fixed and floating UI. One shared navbar geometry model keeps
+   hero clearance tied to the floating navbar at every breakpoint. */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --nav-top-offset: 18px;
+  --nav-safe-top: max(var(--nav-top-offset), calc(var(--safe-area-top) + 8px));
+  --nav-shell-height: 68px;
+  --hero-nav-gap: 58px;
+}
+.navbar {
+  top: var(--nav-safe-top);
+  padding-inline: var(--safe-area-left) var(--safe-area-right);
+}
+.hero-content {
+  padding-top: calc(var(--nav-safe-top) + var(--nav-shell-height) + var(--hero-nav-gap));
+}
+.skip-link {
+  inset-inline-start: max(18px, calc(var(--safe-area-left) + 8px));
+  inset-block-start: max(14px, calc(var(--safe-area-top) + 8px));
+}
+.top-button {
+  right: max(20px, calc(var(--safe-area-right) + 10px));
+  bottom: max(20px, calc(var(--safe-area-bottom) + 10px));
+}
+.mobile-menu[open] {
+  inset-block-start: max(16px, calc(var(--safe-area-top) + 8px));
+  inset-block-end: max(16px, calc(var(--safe-area-bottom) + 8px));
+  inset-inline-start: max(16px, calc(var(--safe-area-left) + 8px));
+  inset-inline-end: max(16px, calc(var(--safe-area-right) + 8px));
+  width: min(620px, calc(100% - 32px - var(--safe-area-left) - var(--safe-area-right)));
+  height: min(740px, calc(100dvh - 32px - var(--safe-area-top) - var(--safe-area-bottom)));
+  max-height: calc(100dvh - 32px - var(--safe-area-top) - var(--safe-area-bottom));
+}
+
+@media (max-width: 860px) {
+  :root {
+    --nav-top-offset: 12px;
+    --nav-shell-height: 60px;
+    --hero-nav-gap: 46px;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --nav-top-offset: 9px;
+    --nav-shell-height: 58px;
+    --hero-nav-gap: 38px;
+  }
+}
+
+/* Keep clear cinematic glass over the photograph; once content is behind the
+   navbar, reduce background leakage just enough to stabilize legibility. */
+.navbar.navbar-content .nav-inner {
+  background-color: rgba(5, 9, 29, .24);
+  border-color: rgba(255,255,255,.14);
+}
+
+/* Later production rules previously left subtle hover reactions on these
+   reading surfaces. Their resting appearance now remains stable. */
+.path-card,
+.timeline-card,
+.toolkit-console { transition: none; }
+.path-card:hover { border-color: var(--cinema-line); }
+.timeline-card:hover { border-color: rgba(255,247,230,.12); }
+.toolkit-console:hover {
+  border-color: var(--cinema-line);
+  box-shadow: 0 24px 64px rgba(0,0,0,.16), inset 0 0 0 6px var(--cinema-panel-2), inset 0 7px 0 rgba(255,247,230,.12);
+}
+
+/* Manifesto: keep the outer editorial object and rare stamp, but let the
+   sentence lead. The fake sequence number is removed in markup and the
+   redundant inset frame is removed here. */
+.manifesto-wrap .manifesto {
+  grid-template-columns: minmax(0,1fr) minmax(145px,.24fr);
+  gap: clamp(32px,5vw,78px);
+}
+.manifesto-wrap .manifesto::after { display: none; }
+.manifesto-text { max-width: 860px; }
+
+@media (max-width: 900px) {
+  .manifesto-wrap .manifesto { grid-template-columns: 1fr; }
+}
+
+/* Swag remains a benefit, but no longer competes with the build/learn/contribute
+   narrative for the page's largest below-fold typographic moment. */
+.rewards-word {
+  font-size: clamp(36px,4.9vw,72px);
+  line-height: .82;
+}
+
+@media (max-width: 767px) {
+  .rewards-word { font-size: clamp(34px,10vw,54px); }
+}
+
+/* Meaningful microtype floor. Decorative map district/route labels deliberately
+   stay small because the accessible map status already carries their meaning. */
+.brand-text small { font-size: 11.5px; }
+.hero-pills span { font-size: 11.5px; }
+.fact-cell small { font-size: 12px; }
+.timeline-row time { font-size: 13px; }
+.timeline-card small { font-size: 12px; }
+.reward-chips span { font-size: 12px; }
+.rewards-copy small { font-size: 12.5px; }
+.register-inner > small { font-size: 13px; }
+.location-map-status { font-size: 12px; }
+.location-map-bottom p { font-size: 13px; }
+.location-map-hint { font-size: 12px; line-height: 1.25; }
+.footer-brand span { font-size: 13.5px; }
+.footer p { font-size: 13px; }
+
+@media (max-width: 860px) {
+  .brand-text small { font-size: 11px; }
+  .fact-cell small { font-size: 11.5px; }
+  .location-map-status { font-size: 12px; }
+}
+
+@media (max-width: 560px) {
+  .brand-text small { font-size: 11px; }
+  .hero-pills span { font-size: 11px; }
+  .fact-cell small { font-size: 11px; }
+  .fact-cell span { font-size: 13px; }
+  .eyebrow { font-size: 11px; }
+  .timeline-row time { font-size: 13px; }
+  .timeline-card small { font-size: 12px; }
+  .reward-chips span { font-size: 11.5px; }
+  .rewards-copy small { font-size: 12.5px; }
+  .location-map-status { font-size: 12px; }
+  .location-map-bottom p { font-size: 13px; }
+  .location-map-hint { font-size: 12px; }
+  .footer-brand span { font-size: 13px; }
+  .footer p { font-size: 12.5px; }
+}
+
+/* Mobile menu navigation focuses the destination heading instead of the whole
+   section. The cue is restrained and exists only while that programmatic focus
+   is active. */
+section :is(h1,h2,h3)[tabindex="-1"]:focus {
+  outline: 2px solid rgba(240,198,65,.62);
+  outline-offset: 8px;
+  border-radius: 4px;
+}
+
+/* Increased contrast is a progressive preference. Baseline colors already
+   remain usable when the media feature isn't available. Match the contextual
+   navbar selector so the content state cannot weaken this preference. */
+@media (prefers-contrast: more) {
+  :root {
+    --cinema-line: rgba(255,247,230,.30);
+    --cinema-muted: rgba(255,247,230,.84);
+  }
+
+  .nav-inner,
+  .navbar.navbar-content .nav-inner {
+    background-color: rgba(5,9,29,.82);
+    border-color: rgba(255,247,230,.42);
+  }
+  .mobile-menu[open] {
+    background-color: #07080d;
+    border-color: rgba(255,247,230,.42);
+  }
+  .mobile-menu::backdrop {
+    background: rgba(7,8,13,.94);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .brand-text small,
+  .section-head p,
+  .editorial-body p:not(.lead),
+  .schedule-intro > p,
+  .path-card p,
+  .timeline-card p,
+  .rewards-copy > p:not(.lead),
+  .venue-copy > p,
+  .faq-heading > p,
+  .footer p { color: rgba(255,247,230,.86); }
+}
+
+/* This preference currently has limited browser support, so it is enhancement
+   only. The ordinary material treatment remains the accessible baseline. */
+@media (prefers-reduced-transparency: reduce) {
+  .nav-inner,
+  .navbar.navbar-content .nav-inner,
+  .mobile-menu[open] {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: #07080d;
+  }
+  .mobile-menu::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(7,8,13,.94);
+  }
+  .button-ghost { background: rgba(7,9,18,.92); }
+  .hero-pills span { background-color: rgba(6,8,19,.94); }
+}
+
+/* High-contrast system fallback for browsers/OS combinations that expose
+   forced colors rather than the preference media features above. */
+@media (forced-colors: active) {
+  .nav-inner,
+  .navbar.navbar-content .nav-inner,
+  .mobile-menu[open] {
+    background: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .mobile-menu::backdrop {
+    background: Canvas;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  :is(a,button,[role="button"]):focus-visible,
+  section :is(h1,h2,h3)[tabindex="-1"]:focus { outline-color: Highlight; }
+}
