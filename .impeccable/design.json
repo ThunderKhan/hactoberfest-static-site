@@ -8,25 +8,43 @@
         "role": "neutral",
         "displayName": "Midnight",
         "canonical": "#07080d",
-        "tonalRamp": ["#030409", "#07080d", "#0d1018", "#111622"]
+        "tonalRamp": [
+          "#030409",
+          "#07080d",
+          "#0d1018",
+          "#111622"
+        ]
       },
       "cream": {
         "role": "neutral",
         "displayName": "Warm Cream",
         "canonical": "#fff7e6",
-        "tonalRamp": ["rgba(255,247,230,.52)", "rgba(255,247,230,.66)", "#fff7e6"]
+        "tonalRamp": [
+          "rgba(255,247,230,.52)",
+          "rgba(255,247,230,.66)",
+          "#fff7e6"
+        ]
       },
       "gold": {
         "role": "primary",
         "displayName": "Hacktober Gold",
         "canonical": "#f0c641",
-        "tonalRamp": ["rgba(240,198,65,.12)", "rgba(240,198,65,.32)", "#f0c641", "#ffd529"]
+        "tonalRamp": [
+          "rgba(240,198,65,.12)",
+          "rgba(240,198,65,.32)",
+          "#f0c641",
+          "#ffd529"
+        ]
       },
       "navy": {
         "role": "secondary",
         "displayName": "Deep Campus Navy",
         "canonical": "#1017aa",
-        "tonalRamp": ["#080d2e", "#090e6f", "#1017aa"]
+        "tonalRamp": [
+          "#080d2e",
+          "#090e6f",
+          "#1017aa"
+        ]
       }
     },
     "typographyMeta": {
@@ -51,7 +69,7 @@
       },
       {
         "name": "map-depth",
-        "value": "0 34px 82px rgba(0,0,0,.42)",
+        "value": "0 24px 64px rgba(0,0,0,.16), inset 0 0 0 6px #111622",
         "purpose": "Signature depth for the interactive campus map."
       }
     ],
@@ -69,20 +87,45 @@
       {
         "name": "layout-medium",
         "value": "350ms",
-        "purpose": "Campus-map state expansion on motion-enabled devices."
+        "purpose": "Campus illustration opacity/transform detail reveal within stable responsive dimensions."
       },
       {
         "name": "reduced-motion",
-        "value": "100-120ms opacity/color state only",
+        "value": "CSS animation and transitions disabled; map detail state remains available",
         "purpose": "Preserve state feedback while removing spatial tilt, drawing and pulse motion."
       }
     ],
     "breakpoints": [
-      { "name": "very-narrow", "value": "420px", "purpose": "Single-column facts and tighter timeline geometry." },
-      { "name": "phone", "value": "560px", "purpose": "Compact hero, buttons and one-column build lanes." },
-      { "name": "tablet", "value": "860px", "purpose": "Collapse editorial two-column layouts and enable mobile navigation." },
-      { "name": "manifesto-collapse", "value": "900px", "purpose": "Simplify manifesto composition and hide its stamp." },
-      { "name": "wide-tablet", "value": "1100px", "purpose": "Move the four build lanes to a two-column grid." }
+      {
+        "name": "very-narrow",
+        "value": "420px",
+        "purpose": "Single-column facts and tighter timeline geometry."
+      },
+      {
+        "name": "phone",
+        "value": "560px",
+        "purpose": "Compact hero, buttons and one-column build lanes."
+      },
+      {
+        "name": "tablet",
+        "value": "860px",
+        "purpose": "Collapse editorial two-column layouts and enable mobile navigation."
+      },
+      {
+        "name": "manifesto-collapse",
+        "value": "900px",
+        "purpose": "Simplify manifesto composition and hide its stamp."
+      },
+      {
+        "name": "wide-tablet",
+        "value": "1100px",
+        "purpose": "Move the four build lanes to a two-column grid."
+      },
+      {
+        "name": "single-column-content",
+        "value": "767px",
+        "purpose": "Single-column build lanes and fluid mobile rewards type."
+      }
     ],
     "narrative": {
       "northStar": "Midnight Commons",

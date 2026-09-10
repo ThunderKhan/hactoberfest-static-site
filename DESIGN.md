@@ -26,7 +26,7 @@ typography:
     lineHeight: 0.98
     letterSpacing: "-0.04em"
   body:
-    fontFamily: "DM Sans, Inter, system-ui, sans-serif"
+    fontFamily: "DM Sans, system-ui, sans-serif"
     fontSize: "clamp(15px, 1.02vw, 17px)"
     fontWeight: 400
     lineHeight: 1.6
@@ -111,7 +111,7 @@ The palette is a warm night scene: near-black navy provides atmosphere, cream pr
 ## Typography
 
 **Display Font:** Fraunces (Georgia fallback)  
-**Body Font:** DM Sans (Inter/system fallback)  
+**Body Font:** DM Sans (system fallback)
 **Label/Mono Font:** DM Mono (system monospace fallback)
 
 **Character:** Fraunces gives the event a literary/editorial confidence that contrasts deliberately with small technical monospace labels. DM Sans keeps long copy contemporary and easy to scan.
@@ -217,3 +217,12 @@ Borders are thin and low-contrast on dark surfaces. Dashed circular borders may 
 - **Don't** use hard offset shadows as the default depth language.
 - **Don't** let the floating navigation become more visually dominant than the hero.
 - **Don't** use gray text on saturated surfaces; use tinted cream or transparency derived from the foreground.
+
+
+## September 2026 high-end control refinement
+
+The high-end audit pass updates controls to rounded pills with a separate trailing icon circle, a small press response and a shared custom timing curve. Floating navigation uses the same pill geometry; mobile navigation expands into a native modal dialog with focus containment and Escape dismissal. Signature surfaces use quiet inset highlights, while the editorial reading layouts remain stable.
+
+Hero ambience now settles after a short entrance. The bottom marquee keeps its motion with a persistent pause toggle and a static reduced-motion layout. The campus illustration reveals detail within fixed responsive dimensions and is explicitly labelled as illustrative rather than geographic guidance. The final registration section shows a status when no registration URL is configured.
+
+This refinement supersedes the earlier 10px CTA rule. Further token/cascade consolidation is tracked in `docs/visual-audit.md`.

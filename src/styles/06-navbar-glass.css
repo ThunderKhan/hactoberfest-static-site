@@ -4,7 +4,7 @@
   top: 18px;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: var(--layer-nav);
   background: transparent;
   border: 0;
   backdrop-filter: none;
@@ -96,7 +96,7 @@
   font-size: 13px;
   font-weight: 600;
   text-shadow: 0 1px 8px rgba(0,0,0,.20);
-  transition: color .2s ease, transform .2s ease;
+  transition: color .2s var(--motion-ease), transform .2s var(--motion-ease);
 }
 
 .desktop-links a:hover {

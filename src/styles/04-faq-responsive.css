@@ -30,7 +30,7 @@
 .footer p { margin: 0; }
 .top-button {
   position: fixed;
-  z-index: 60;
+  z-index: var(--layer-control);
   right: 20px;
   bottom: 20px;
   width: 45px;
@@ -42,7 +42,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
-  transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+  transition: opacity .2s var(--motion-ease), transform .2s var(--motion-ease), box-shadow .2s var(--motion-ease);
   box-shadow: 0 10px 28px rgba(0,0,0,.24);
 }
 .top-button svg { width: 17px; transform: rotate(180deg); }
