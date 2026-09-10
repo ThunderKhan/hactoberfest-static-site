@@ -1,22 +1,43 @@
 :root {
-  --ink: #101526;
+  /* Semantic design tokens */
+  --color-ink: #101526;
+  --color-text-primary: #fff7e6;
+  --color-accent: #f0c641;
+  --color-action: #ffd529;
+  --surface-panel-raised: #111622;
+  --surface-nav-hero: rgba(5, 9, 29, .075);
+  --surface-nav-content: rgba(5, 9, 29, .24);
+  --surface-nav-opaque: #07080d;
+  --shadow-signature: 0 24px 64px rgba(0,0,0,.16), inset 0 0 0 6px var(--surface-panel-raised), inset 0 7px 0 rgba(255,247,230,.12);
+  --focus-ring: var(--color-accent);
+
+  /* Compatibility aliases used by the existing component vocabulary. */
+  --ink: var(--color-ink);
   --blue: #1017aa;
   --blue-dark: #090e6f;
   --blue-black: #080d2e;
-  --yellow: #ffd529;
+  --yellow: var(--color-action);
   --yellow-deep: #f2b91d;
-  --cream: #fff7e6;
+  --cream: var(--color-text-primary);
   --cream-2: #f6edd9;
   --sky: #3242ff;
   --green: #32cf9a;
   --orange: #ff762b;
   --lavender: #c8c8ff;
   --line: rgba(16, 21, 38, 0.16);
+
   --serif: "Fraunces", Georgia, serif;
   --sans: "DM Sans", system-ui, sans-serif;
   --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --container: 1240px;
-  --motion-ease: cubic-bezier(.32,.72,0,1);
+
+  --motion-ease-standard: cubic-bezier(.32,.72,0,1);
+  --motion-ease-confident: cubic-bezier(.16,1,.3,1);
+  --motion-feedback-fast: .18s;
+  --motion-feedback-standard: .2s;
+  --motion-medium: .35s;
+  --motion-ease: var(--motion-ease-standard);
+
   --layer-nav: 70;
   --layer-control: 60;
   --layer-skip: 80;
@@ -40,23 +61,7 @@ img { display: block; max-width: 100%; }
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-}
-
-/* Navigation structure. The visual glass treatment lives in 06-navbar-glass.css. */
-.navbar { z-index: 70; }
-.nav-inner {
-  min-height: 82px;
-  width: min(var(--container), calc(100% - 48px));
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-}
-.brand { display: inline-flex; align-items: center; gap: 13px; flex-shrink: 0; }
+/* Shared brand-mark primitive. Navbar-specific artwork/chrome lives with navigation. */
 .brand-mark {
   width: 45px;
   height: 45px;
@@ -70,62 +75,42 @@ img { display: block; max-width: 100%; }
   font: 600 20px/1 var(--mono);
 }
 .brand-mark i { width: 3px; height: 3px; border-radius: 50%; background: var(--cream); margin: 0 1px; }
-.brand-text { display: grid; line-height: 1; }
-.brand-text strong { font-size: 17px; letter-spacing: -.02em; }
-.brand-text small { margin-top: 5px; font: 500 9px/1 var(--mono); letter-spacing: .28em; }
-.desktop-links { display: flex; align-items: center; gap: 30px; margin-left: auto; margin-right: 22px; }
-.desktop-links a { font-size: 13px; font-weight: 650; position: relative; }
-.desktop-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  bottom: -8px;
-  height: 1px;
-  background: var(--blue);
-  transition: transform .3s var(--motion-ease);
-}
-.desktop-links a:hover::after { transform: scaleX(1); }
-.nav-actions { display: flex; align-items: center; gap: 12px; }
-.menu-button {
-  display: none;
-  width: 44px;
-  height: 44px;
-  border: 1px solid currentColor;
-  background: transparent;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-}
-.menu-button span { width: 20px; height: 2px; background: currentColor; transition: transform .2s var(--motion-ease); }
-.menu-button.active span:first-child { transform: translateY(4px) rotate(45deg); }
-.menu-button.active span:last-child { transform: translateY(-4px) rotate(-45deg); }
-.mobile-menu { display: none; padding: 12px 24px 20px; }
 
-.mobile-menu a { padding: 13px 0; border-bottom: 1px solid var(--line); font-weight: 650; }
-
-/* Controls use soft depth rather than hard offset shadows. */
+/* Controls own their final pill geometry here; no later production override required. */
 .button {
-  min-height: 50px;
-  padding: 0 22px;
-  border-radius: 10px;
+  min-height: 52px;
+  padding: 8px 8px 8px 24px;
+  border-radius: 999px;
   border: 1px solid currentColor;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 13px;
-  font-size: 13px;
+  gap: 18px;
+  font-size: 14px;
   font-weight: 800;
   line-height: 1;
   letter-spacing: -.01em;
-  transition: transform .18s cubic-bezier(.16,1,.3,1), box-shadow .18s var(--motion-ease), background .18s var(--motion-ease), border-color .18s var(--motion-ease);
+  transition:
+    transform var(--motion-feedback-fast) var(--motion-ease-confident),
+    box-shadow var(--motion-feedback-fast) var(--motion-ease),
+    background var(--motion-feedback-fast) var(--motion-ease),
+    border-color var(--motion-feedback-fast) var(--motion-ease);
 }
 .button .arrow-icon { width: 17px; height: 17px; }
+.button-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(16,21,38,.09);
+  transition: transform var(--motion-medium) var(--motion-ease);
+}
+.button:hover .button-icon { transform: translate(2px,-1px) scale(1.04); }
+.button:active,
+.navbar .button-yellow:active { transform: scale(.98); }
+
 .button-yellow {
   background: linear-gradient(180deg, #ffe265 0%, var(--yellow) 72%);
   color: var(--ink);
@@ -139,6 +124,7 @@ img { display: block; max-width: 100%; }
   border-color: rgba(255,247,230,.85);
   box-shadow: 0 10px 28px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.08);
 }
+.button-ghost .button-icon { background: rgba(255,247,230,.1); }
 .button-ghost:hover { background: rgba(255,247,230,.1); transform: translateY(-2px); }
 .button-cream {
   background: var(--cream);
@@ -148,3 +134,17 @@ img { display: block; max-width: 100%; }
 }
 .button-cream:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.7); }
 .button.disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+
+.registration-status {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999px;
+  color: var(--cinema-gold);
+  background: var(--cinema-panel-2);
+  box-shadow: inset 0 1px 0 var(--cinema-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

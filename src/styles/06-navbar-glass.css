@@ -1,10 +1,22 @@
-/* Floating liquid-glass navigation — fixed across the entire page. */
+/* Floating navigation owns structure, material, responsive behavior, and brand chrome. */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --nav-top-offset: 18px;
+  --nav-safe-top: max(var(--nav-top-offset), calc(var(--safe-area-top) + 8px));
+  --nav-shell-height: 68px;
+  --hero-nav-gap: 58px;
+}
+
 .navbar {
   position: fixed;
-  top: 18px;
+  top: var(--nav-safe-top);
   left: 0;
   right: 0;
   z-index: var(--layer-nav);
+  padding-inline: var(--safe-area-left) var(--safe-area-right);
   background: transparent;
   border: 0;
   backdrop-filter: none;
@@ -14,15 +26,16 @@
 .nav-inner {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
   width: min(1120px, calc(100% - 56px));
   min-height: 66px;
+  margin: auto;
   padding: 8px 10px 8px 14px;
   border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 22px;
+  border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(20, 28, 74, .16), rgba(4, 8, 28, .055)),
-    rgba(5, 9, 29, .075);
+    var(--surface-nav-hero);
   -webkit-backdrop-filter: blur(22px) saturate(140%) brightness(1.01);
   backdrop-filter: blur(22px) saturate(140%) brightness(1.01);
   box-shadow:
@@ -31,6 +44,10 @@
     inset 0 1px 0 rgba(255, 255, 255, .12),
     inset 0 -1px 0 rgba(255, 255, 255, .025);
   color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
   pointer-events: auto;
 }
 
@@ -53,50 +70,85 @@
   position: absolute;
   z-index: -1;
   inset: 1px;
-  border-radius: 20px;
+  border-radius: inherit;
   pointer-events: none;
   box-shadow: inset 0 0 20px rgba(35, 53, 142, .05);
 }
 
+/* The contextual material is intentionally denser after the hero leaves the nav. */
+.navbar.navbar-content .nav-inner {
+  background-color: var(--surface-nav-content);
+  border-color: rgba(255,255,255,.14);
+}
+
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  flex-shrink: 0;
   color: var(--cream);
 }
 
-.brand-mark {
+.navbar .brand-mark {
   width: 42px;
   height: 42px;
+  overflow: hidden;
+  padding: 0;
   border-radius: 13px;
-  border-color: rgba(255, 213, 41, .62);
-  background: rgba(4, 9, 34, .24);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  border-color: rgba(255, 213, 41, .28);
+  background:
+    rgba(4, 9, 34, .42)
+    url("/favicon.png")
+    center / cover
+    no-repeat;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    0 5px 13px rgba(0,0,0,.12);
+    0 6px 16px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.05);
 }
 
+.navbar .brand-mark > * { display: none; }
+
+.navbar .brand:hover .brand-mark {
+  border-color: rgba(255, 213, 41, .46);
+  box-shadow:
+    0 7px 18px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+.brand-text { display: grid; line-height: 1; }
 .brand-text strong {
   color: var(--cream);
-  font-size: 16px;
+  font-size: clamp(16px,1vw,18px);
   letter-spacing: -.025em;
   text-shadow: 0 1px 10px rgba(0,0,0,.28);
 }
-
 .brand-text small {
+  margin-top: 5px;
   color: rgba(255,247,230,.58);
+  font: 500 11.5px/1 var(--mono);
+  letter-spacing: .22em;
 }
 
 .desktop-links {
+  display: flex;
+  align-items: center;
   gap: 28px;
+  margin-left: auto;
   margin-right: 18px;
 }
 
 .desktop-links a {
+  position: relative;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   color: rgba(255,247,230,.76);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-shadow: 0 1px 8px rgba(0,0,0,.20);
-  transition: color .2s var(--motion-ease), transform .2s var(--motion-ease);
+  transition: color var(--motion-feedback-standard) var(--motion-ease), transform var(--motion-feedback-standard) var(--motion-ease);
 }
 
 .desktop-links a:hover {
@@ -105,18 +157,50 @@
 }
 
 .desktop-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
   bottom: -7px;
   height: 1px;
   background: var(--yellow);
   box-shadow: 0 0 7px rgba(255,213,41,.42);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s var(--motion-ease);
 }
+.desktop-links a:hover::after { transform: scaleX(1); }
 
-/* Keep the CTA visible, but reduce its visual weight so the hero remains dominant. */
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+
+.menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,247,230,.16);
+  background: rgba(255,255,255,.035);
+  color: var(--cream);
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.menu-button span {
+  width: 20px;
+  height: 2px;
+  background: var(--cream);
+  transition: transform var(--motion-feedback-standard) var(--motion-ease);
+}
+.menu-button.active span:first-child { transform: translateY(4px) rotate(45deg); }
+.menu-button.active span:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+/* Registration keeps the nav-specific surface while inheriting shared button geometry. */
 .navbar .button-yellow {
-  min-height: 46px;
-  padding-inline: 20px;
   border: 1px solid rgba(255,255,255,.28);
-  border-radius: 14px;
   background: linear-gradient(180deg, rgba(255,225,89,.96) 0%, rgba(255,213,41,.94) 72%);
   box-shadow:
     0 6px 16px rgba(0,0,0,.15),
@@ -132,50 +216,97 @@
     inset 0 -1px 0 rgba(126,84,0,.10);
 }
 
-.menu-button {
-  color: var(--cream);
-  border-color: rgba(255,247,230,.16);
-  background: rgba(255,255,255,.035);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.menu-button span {
-  background: var(--cream);
-}
-
-/* Navbar floats over the hero rather than consuming its own row. */
-.hero {
-  min-height: 100svh;
-  height: max(780px, 100svh);
-  max-height: 960px;
-}
-
+/* Hero clearance is coupled to the floating navbar geometry. */
 .hero-content {
-  padding-top: 144px;
+  padding-top: calc(var(--nav-safe-top) + var(--nav-shell-height) + var(--hero-nav-gap));
+}
+
+/* Native dialog supplies focus containment, Escape dismissal and inert background. */
+.mobile-menu { display: none; }
+.mobile-menu a {
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255,247,230,.10);
+  font-weight: 650;
+}
+.mobile-menu[open] {
+  position: fixed;
+  inset-block-start: max(16px, calc(var(--safe-area-top) + 8px));
+  inset-block-end: max(16px, calc(var(--safe-area-bottom) + 8px));
+  inset-inline-start: max(16px, calc(var(--safe-area-left) + 8px));
+  inset-inline-end: max(16px, calc(var(--safe-area-right) + 8px));
+  margin: auto;
+  width: min(620px, calc(100% - 32px - var(--safe-area-left) - var(--safe-area-right)));
+  max-width: none;
+  height: min(740px, calc(100dvh - 32px - var(--safe-area-top) - var(--safe-area-bottom)));
+  max-height: calc(100dvh - 32px - var(--safe-area-top) - var(--safe-area-bottom));
+  padding: 24px;
+  border: 1px solid var(--cinema-line);
+  border-radius: 32px;
+  background: rgba(7,8,13,.96);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+.mobile-menu::backdrop {
+  background: rgba(7,8,13,.82);
+  backdrop-filter: blur(20px);
+}
+.mobile-menu-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  font: 11px/1.5 var(--mono);
+  letter-spacing: .12em;
+  color: var(--cinema-gold);
+}
+.menu-close {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--cinema-line);
+  background: var(--cinema-panel-2);
+  color: var(--cream);
+  font-size: 28px;
+  cursor: pointer;
+}
+.mobile-menu[open] > a {
+  min-height: 56px;
+  font: 500 clamp(26px,6vw,42px)/1.15 var(--serif);
+  padding: 14px 0;
+  animation: openingSoftRise .55s var(--motion-ease) var(--delay) both;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .navbar .brand-mark {
+    transition:
+      border-color var(--motion-feedback-standard) var(--motion-ease),
+      box-shadow var(--motion-feedback-standard) var(--motion-ease),
+      transform var(--motion-feedback-standard) var(--motion-ease);
+  }
+  .navbar .brand:hover .brand-mark { transform: translateY(-1px); }
 }
 
 @media (max-width: 1100px) {
-  .nav-inner {
-    width: min(100% - 40px, 1040px);
-  }
-
-  .desktop-links {
-    gap: 19px;
-    margin-right: 8px;
-  }
+  .nav-inner { width: min(100% - 40px, 1040px); }
+  .desktop-links { gap: 19px; margin-right: 8px; }
 }
 
 @media (max-width: 860px) {
-  .navbar {
-    top: 12px;
+  :root {
+    --nav-top-offset: 12px;
+    --nav-shell-height: 60px;
+    --hero-nav-gap: 46px;
   }
 
   .nav-inner {
     width: calc(100% - 24px);
     min-height: 60px;
     padding: 6px 8px 6px 10px;
-    border-radius: 18px;
     border-color: rgba(255,255,255,.10);
     background:
       linear-gradient(180deg, rgba(20, 28, 74, .18), rgba(4, 8, 28, .07)),
@@ -184,57 +315,43 @@
     backdrop-filter: blur(20px) saturate(140%);
   }
 
-  .brand-mark {
+  .navbar .brand-mark {
     width: 40px;
     height: 40px;
     border-radius: 12px;
   }
 
-  .brand-text strong {
-    font-size: 15px;
-  }
+  .brand-text strong { font-size: 16px; }
+  .brand-text small { font-size: 11px; }
 
-  .mobile-menu {
-    position: absolute;
-    top: 68px;
-    left: 12px;
-    right: 12px;
-    padding: 12px 16px 16px;
-    color: var(--cream);
-    border: 1px solid rgba(255,247,230,.13);
-    border-radius: 16px;
-    background: rgba(7,12,45,.34);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    backdrop-filter: blur(24px) saturate(150%);
-    box-shadow: 0 16px 36px rgba(0,0,0,.22);
-    pointer-events: auto;
-  }
-
-  .mobile-menu a {
-    border-bottom-color: rgba(255,247,230,.10);
-  }
-
-  .hero-content {
-    padding-top: 118px;
-  }
+  .desktop-links,
+  .desktop-register { display: none; }
+  .menu-button { display: flex; }
 }
 
 @media (max-width: 560px) {
-  .navbar {
-    top: 9px;
+  :root {
+    --nav-top-offset: 9px;
+    --nav-shell-height: 58px;
+    --hero-nav-gap: 38px;
   }
 
   .nav-inner {
     width: calc(100% - 18px);
     min-height: 58px;
-    border-radius: 17px;
   }
 
   .brand-text small {
     color: rgba(255,247,230,.52);
+    font-size: 11px;
   }
+}
 
-  .hero-content {
-    padding-top: 105px;
+@media (forced-colors: active) {
+  .navbar .brand-mark {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
   }
+  .navbar .brand-mark > * { display: initial; }
 }
