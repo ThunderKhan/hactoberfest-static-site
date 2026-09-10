@@ -27,11 +27,6 @@
   animation: none;
 }
 
-/* Preserve the existing gold afterglow as part of the Midnight Commons identity. */
-.hero-title em {
-  animation-delay: 1.18s;
-}
-
 @keyframes openingLandscapeIn {
   0% {
     opacity: 0;
