@@ -244,6 +244,9 @@
   border-radius: 32px;
   background: rgba(7,8,13,.96);
   color: var(--cream);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 0 16px 36px rgba(0,0,0,.22);
   display: flex;
   flex-direction: column;
   overflow-y: auto;

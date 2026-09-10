@@ -66,13 +66,14 @@ img { display: block; max-width: 100%; }
   width: 45px;
   height: 45px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.16);
-  background: var(--blue-black);
+  border: 1px solid rgba(255,213,41,.62);
+  background: rgba(4,9,34,.24);
   color: var(--yellow);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font: 600 20px/1 var(--mono);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 5px 13px rgba(0,0,0,.12);
 }
 .brand-mark i { width: 3px; height: 3px; border-radius: 50%; background: var(--cream); margin: 0 1px; }
 
