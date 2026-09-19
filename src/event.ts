@@ -6,7 +6,7 @@ export const EVENT = {
   address: "Deen Dayal Upadhyaya Gorakhpur University, Civil Lines, Institute of Engineering & Technology (IET), Gorakhpur, Uttar Pradesh 273009, India",
   date: "Saturday, October 10, 2026",
   dateDetail: "11:00 AM – 4:00 PM IST",
-  registrationUrl: "",
+  registrationUrl: "https://events.mlh.com/events/15114-hacktoberfest-hack-day-gorakhpur-x-ddugu",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Institute%20of%20Engineering%20%26%20Technology%20%28IET%29%2C%20DDUGU%2C%20Gorakhpur%2C%20Uttar%20Pradesh%20273009",
 };
@@ -121,5 +121,5 @@ export const FAQS = [
   ["Do I need a team?", "No. You can come solo or find teammates at the event."],
   ["What will I learn?", "The schedule includes open-source AI, open-weight models, AI agents, local AI, Git & GitHub fundamentals, and hands-on building and contribution."],
   ["What happens during the Hack Sprint?", "Participants explore open-source projects, work on issues, build with others, and make meaningful contributions."],
-  ["How do I register?", "Registration details are not currently listed in the event information provided. Follow the DDUGU Developer Community's event announcements for updates."],
+  ["How do I register?", "Registration is now open. Use the registration buttons on this site to open the official MLH event page and register."],
 ];
