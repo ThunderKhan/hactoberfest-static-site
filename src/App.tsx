@@ -361,7 +361,7 @@ function App() {
         <section className="fact-strip" aria-label="Event facts">
           <div className="container fact-grid reveal">
             <div className="fact-cell"><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></div>
-            <div className="fact-cell"><small>WHEN</small><strong>OCT 2026</strong><span>Exact date TBA</span></div>
+            <div className="fact-cell"><small>WHEN</small><strong>OCT 10, 2026</strong><span>11:00 AM – 4:00 PM IST</span></div>
             <div className="fact-cell"><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></div>
             <div className="fact-cell"><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></div>
           </div>
