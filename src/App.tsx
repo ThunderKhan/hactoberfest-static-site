@@ -351,6 +351,7 @@ function App() {
             </p>
             <div className="hero-actions reveal visible">
               <RegistrationButton />
+              <Button href={EVENT.communityUrl} variant="ghost">Join the Community <span className="button-icon"><Arrow direction="up-right" /></span></Button>
               <Button href="#schedule" variant={registrationAvailable ? "ghost" : "yellow"}>Explore schedule <span className="button-icon"><Arrow direction="down" /></span></Button>
             </div>
           </div>
