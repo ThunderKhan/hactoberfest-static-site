@@ -347,7 +347,7 @@ function App() {
               <em>Hack Day × DDUGU</em>
             </h1>
             <p className="hero-copy reveal visible">
-              A campus day for building, learning, and contributing together. Meet fellow builders, work on real projects, and leave with something you can keep shipping.
+              A university Hack Day for building and contributing in open source—with open-source AI, open-weight models, and AI agents at the center.
             </p>
             <div className="hero-actions reveal visible">
               <RegistrationButton />
@@ -374,7 +374,7 @@ function App() {
             <div className="editorial-body reveal">
               <p className="lead">The internet makes open source look like a wall of repositories. The Hack Day makes it human.</p>
               <p>Bring a laptop and a little curiosity. We will turn Git workflows, issues, models, deployment, and collaboration into something you can touch, break, fix, and understand with people sitting next to you.</p>
-              <div className="inline-note"><span>NO PERFECT IDEA REQUIRED</span><i /> Start small. Make it useful. Explain what you learned.</div>
+              <div className="inline-note"><span>FIRST CONTRIBUTION WELCOME</span><i /> Start small. Make it useful. Explain what you learned.</div>
             </div>
           </div>
 
@@ -492,7 +492,7 @@ function App() {
                     <button id={questionId} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i} aria-controls={answerId}>
                       <span>{String(i + 1).padStart(2, "0")}</span><strong>{q}</strong><i aria-hidden="true">{openFaq === i ? "−" : "+"}</i>
                     </button>
-                    <div id={answerId} className="faq-answer" hidden={openFaq !== i} role="region" aria-labelledby={questionId}><p>{a}</p></div>
+                    <div id={answerId} className="faq-answer" hidden={openFaq !== i} role="region" aria-labelledby={questionId}><p>{i === 7 ? <>Registration is now open. <a href={EVENT.registrationUrl} target="_blank" rel="noreferrer"><strong>Register on MLH →</strong></a></> : a}</p></div>
                   </div>
                 );
               })}
@@ -520,7 +520,7 @@ function App() {
       <footer className="footer">
         <div className="container footer-grid">
           <div className="footer-brand"><BrandMark /><div><strong>Hacktoberfest × DDUGU</strong><span>Build open. Learn together. Ship something real.</span></div></div>
-          <div className="footer-links"><a href="#about">About</a><a href="#schedule">Schedule</a><a href="#venue">Venue</a><a href="#faq">FAQ</a></div>
+          <div className="footer-links"><a href="#about">About</a><a href="#schedule">Schedule</a><a href="#venue">Venue</a><a href="#faq">FAQ</a><a href={EVENT.communityUrl} target="_blank" rel="noreferrer">Community</a></div>
           <p>Organized locally by {EVENT.organizer}. Hacktoberfest is a registered trademark of DigitalOcean. Event details are based on the official event listing and may change with organizer updates.</p>
         </div>
       </footer>
