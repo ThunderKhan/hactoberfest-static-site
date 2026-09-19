@@ -74,6 +74,7 @@ function mobileNavigationLabel(id: string) {
   if (id === "paths") return "Build paths";
   if (id === "faq") return "FAQ";
   if (id === "register") return "Register for Hack Day";
+  if (id === "community") return "Join WhatsApp Community";
   return id[0].toUpperCase() + id.slice(1);
 }
 
@@ -328,8 +329,21 @@ function App() {
         </div>
         <dialog ref={menuRef} id="mobile-navigation" className="mobile-menu" aria-label="Site navigation" onCancel={() => setMenuOpen(false)} onClose={() => setMenuOpen(false)}>
           <div className="mobile-menu-heading"><span>EXPLORE THE HACK DAY</span><button className="menu-close" onClick={() => setMenuOpen(false)} aria-label="Close menu" autoFocus>×</button></div>
-          {["about", "paths", "schedule", "venue", "faq", "register"].map((id, i) => (
-            <a key={id} style={{ "--delay": `${i * 45}ms` } as CSSProperties} href={`#${id}`} onClick={e => { e.preventDefault(); navigateFromMenu(id); }}>{mobileNavigationLabel(id)}</a>
+          {["about", "paths", "schedule", "venue", "faq", "community", "register"].map((id, i) => (
+            <a
+              key={id}
+              style={{ "--delay": `${i * 45}ms` } as CSSProperties}
+              href={id === "community" ? EVENT.communityUrl : `#${id}`}
+              target={id === "community" ? "_blank" : undefined}
+              rel={id === "community" ? "noreferrer" : undefined}
+              onClick={e => {
+                if (id === "community") return;
+                e.preventDefault();
+                navigateFromMenu(id);
+              }}
+            >
+              {mobileNavigationLabel(id)}
+            </a>
           ))}
         </dialog>
       </nav>
@@ -351,7 +365,7 @@ function App() {
             </p>
             <div className="hero-actions reveal visible">
               <RegistrationButton />
-              <Button href={EVENT.communityUrl} variant="ghost">Join the Community <span className="button-icon"><Arrow direction="up-right" /></span></Button>
+              <Button href={EVENT.communityUrl} variant="ghost">Join WhatsApp Community <span className="button-icon"><Arrow direction="up-right" /></span></Button>
               <Button href="#schedule" variant={registrationAvailable ? "ghost" : "yellow"}>Explore schedule <span className="button-icon"><Arrow direction="down" /></span></Button>
             </div>
           </div>
@@ -482,7 +496,7 @@ function App() {
             <div className="faq-heading reveal">
               <div className="eyebrow"><Spark size={13} /> BEFORE YOU DM THE ORGANIZER</div>
               <h2>Questions,<br />answered.</h2>
-              <p>For the latest event logistics or updates, check the official MLH event page.</p>
+              <p>For the latest event logistics or updates, check the official MLH event page. Important announcements and reminders are shared in the <a href={EVENT.communityUrl} target="_blank" rel="noreferrer"><strong>DDUGU Developer Community WhatsApp group</strong></a>.</p>
             </div>
             <div className="faq-list reveal">
               {FAQS.map(([q, a], i) => {
@@ -507,7 +521,10 @@ function App() {
             <p className="hero-kicker">Your first contribution can start here</p>
             <h2>Hacktoberfest<br /><em>Hack Day × DDUGU</em></h2>
             <p>{EVENT.date} · {EVENT.dateDetail}<br />{EVENT.venue}</p>
-            <RegistrationButton status />
+            <div className="hero-actions reveal visible">
+              <RegistrationButton status />
+              <Button href={EVENT.calendarUrl} variant="ghost">Add to Calendar <span className="button-icon"><Arrow direction="up-right" /></span></Button>
+            </div>
             {!registrationAvailable && <small>Registration is currently unavailable from this site.</small>}
           </div>
         </section>
