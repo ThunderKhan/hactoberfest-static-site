@@ -64,7 +64,7 @@ function Button({ children, href, variant = "yellow", disabled = false }: { chil
 function RegistrationButton({ nav = false, status = false }: { nav?: boolean; status?: boolean }) {
   return (
     <Button href={EVENT.registrationUrl} variant="yellow">
-      "Register for Hack Day"
+      Register for Hack Day
       <span className="button-icon"><Arrow /></span>
     </Button>
   );
@@ -221,7 +221,6 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [showTop, setShowTop] = useState(false);
-  const [tickerPaused, setTickerPaused] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
 
   const menuRef = useRef<HTMLDialogElement>(null);
@@ -513,10 +512,9 @@ function App() {
         </section>
       </main>
 
-      <div className="ticker" role="region" aria-label="Event highlights" data-paused={tickerPaused}>
+      <div className="ticker" role="region" aria-label="Event highlights">
         <span className="sr-only">{TICKER.join(" · ")}</span>
         <div className="ticker-track" aria-hidden="true">{[...TICKER, ...TICKER].map((item, i) => <span key={`${item}-${i}`} data-copy={i >= TICKER.length}>{item}<Spark size={11} /></span>)}</div>
-        <button className="ticker-control" onClick={() => setTickerPaused(value => !value)}>{tickerPaused ? "Resume highlights" : "Pause highlights"}</button>
       </div>
 
       <footer className="footer">
