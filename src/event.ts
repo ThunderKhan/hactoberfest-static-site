@@ -8,6 +8,7 @@ export const EVENT = {
   dateDetail: "11:00 AM – 4:00 PM IST",
   registrationUrl: "https://events.mlh.com/events/15114-hacktoberfest-hack-day-gorakhpur-x-ddugu",
   communityUrl: "https://chat.whatsapp.com/IIv67ODlM6H8CTeGtaV2qX",
+  calendarUrl: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Hacktoberfest%20Hack%20Day%20Gorakhpur%20%C3%97%20DDUGU&dates=20261010T053000Z%2F20261010T103000Z&details=In-person%20university%20Hack%20Day%20focused%20on%20open-source%20AI%2C%20open-weight%20models%2C%20AI%20agents%2C%20Git%20%26%20GitHub%2C%20and%20hands-on%20open-source%20contribution.%20Announcements%20and%20updates%20will%20be%20shared%20in%20the%20DDUGU%20Developer%20Community%20WhatsApp%20group.&location=Institute%20of%20Engineering%20%26%20Technology%20%28IET%29%2C%20DDUGU%2C%20Gorakhpur%2C%20Uttar%20Pradesh%20273009%2C%20India",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Institute%20of%20Engineering%20%26%20Technology%20%28IET%29%2C%20DDUGU%2C%20Gorakhpur%2C%20Uttar%20Pradesh%20273009",
 };
