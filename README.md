@@ -43,19 +43,13 @@ No backend or environment variables are required.
 
 Open `src/event.ts`.
 
-The most important field is:
+The official registration URL is configured as:
 
 ```ts
-registrationUrl: "",
+registrationUrl: "https://events.mlh.com/events/15114-hacktoberfest-hack-day-gorakhpur-x-ddugu",
 ```
 
-When the official registration URL is available, change it to:
-
-```ts
-registrationUrl: "https://...",
-```
-
-All registration CTAs will then point to it. The same file also contains the date, venue, schedule, build paths, FAQ, and starter-kit copy.
+Registration is open, and all registration CTAs point to the official MLH event page. The same file also contains the date, venue, schedule, build paths, FAQ, and starter-kit copy.
 
 ## Design source of truth
 
