@@ -123,5 +123,6 @@ export const FAQS = [
   ["Do I need a team?", "No. You can come solo or find teammates at the event."],
   ["What will I learn?", "The schedule includes open-source AI, open-weight models, AI agents, local AI, Git & GitHub fundamentals, and hands-on building and contribution."],
   ["What happens during the Hack Sprint?", "Participants explore open-source projects, work on issues, build with others, and make meaningful contributions."],
+  ["Where are event announcements posted?", "Important announcements, reminders, schedule updates, and organizer communication will be shared in the DDUGU Developer Community WhatsApp group."],
   ["How do I register?", "Registration is now open. Use the registration buttons on this site to open the official MLH event page and register."],
 ];
