@@ -7,6 +7,7 @@ export const EVENT = {
   date: "Saturday, October 10, 2026",
   dateDetail: "11:00 AM – 4:00 PM IST",
   registrationUrl: "https://events.mlh.com/events/15114-hacktoberfest-hack-day-gorakhpur-x-ddugu",
+  communityUrl: "https://chat.whatsapp.com/IIv67ODlM6H8CTeGtaV2qX",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Institute%20of%20Engineering%20%26%20Technology%20%28IET%29%2C%20DDUGU%2C%20Gorakhpur%2C%20Uttar%20Pradesh%20273009",
 };
