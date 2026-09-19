@@ -64,7 +64,7 @@ function Button({ children, href, variant = "yellow", disabled = false }: { chil
 function RegistrationButton({ nav = false, status = false }: { nav?: boolean; status?: boolean }) {
   return (
     <Button href={EVENT.registrationUrl} variant="yellow">
-      {nav ? "Register for Hack Day" : status ? "Secure Your Spot" : "Register Now"}
+      "Register for Hack Day"
       <span className="button-icon"><Arrow /></span>
     </Button>
   );
