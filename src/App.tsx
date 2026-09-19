@@ -62,10 +62,9 @@ function Button({ children, href, variant = "yellow", disabled = false }: { chil
 }
 
 function RegistrationButton({ nav = false, status = false }: { nav?: boolean; status?: boolean }) {
-  if (status && !registrationAvailable) return <p className="registration-status">Registration coming soon</p>;
   return (
-    <Button href={registrationAvailable ? EVENT.registrationUrl : "#register"} variant={registrationAvailable ? "yellow" : "ghost"}>
-      {registrationAvailable ? "Register now" : nav ? "Registration details" : "See registration status"}
+    <Button href={EVENT.registrationUrl} variant="yellow">
+      {nav ? "Register for Hack Day" : status ? "Secure Your Spot" : "Register Now"}
       <span className="button-icon"><Arrow /></span>
     </Button>
   );
@@ -74,7 +73,7 @@ function RegistrationButton({ nav = false, status = false }: { nav?: boolean; st
 function mobileNavigationLabel(id: string) {
   if (id === "paths") return "Build paths";
   if (id === "faq") return "FAQ";
-  if (id === "register") return registrationAvailable ? "Register" : "Registration details";
+  if (id === "register") return "Register";
   return id[0].toUpperCase() + id.slice(1);
 }
 
