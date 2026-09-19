@@ -337,7 +337,11 @@ function App() {
               target={id === "community" ? "_blank" : undefined}
               rel={id === "community" ? "noreferrer" : undefined}
               onClick={e => {
-                if (id === "community") return;
+                if (id === "community") {
+                  menuRef.current?.close();
+                  setMenuOpen(false);
+                  return;
+                }
                 e.preventDefault();
                 navigateFromMenu(id);
               }}
@@ -507,7 +511,15 @@ function App() {
                     <button id={questionId} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i} aria-controls={answerId}>
                       <span>{String(i + 1).padStart(2, "0")}</span><strong>{q}</strong><i aria-hidden="true">{openFaq === i ? "−" : "+"}</i>
                     </button>
-                    <div id={answerId} className="faq-answer" hidden={openFaq !== i} role="region" aria-labelledby={questionId}><p>{i === 7 ? <>Registration is now open. <a href={EVENT.registrationUrl} target="_blank" rel="noreferrer"><strong>Register on MLH →</strong></a></> : a}</p></div>
+                    <div id={answerId} className="faq-answer" hidden={openFaq !== i} role="region" aria-labelledby={questionId}>
+                      <p>
+                        {q === "How do I register?" ? (
+                          <>Registration is now open. <a href={EVENT.registrationUrl} target="_blank" rel="noreferrer"><strong>Register on MLH →</strong></a></>
+                        ) : q === "Where are event announcements posted?" ? (
+                          <>Important announcements, reminders, schedule updates, and organizer communication will be shared in the <a href={EVENT.communityUrl} target="_blank" rel="noreferrer"><strong>DDUGU Developer Community WhatsApp group →</strong></a>.</>
+                        ) : a}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
