@@ -73,7 +73,7 @@ function RegistrationButton({ nav = false, status = false }: { nav?: boolean; st
 function mobileNavigationLabel(id: string) {
   if (id === "paths") return "Build paths";
   if (id === "faq") return "FAQ";
-  if (id === "register") return "Register";
+  if (id === "register") return "Register for Hack Day";
   return id[0].toUpperCase() + id.slice(1);
 }
 
@@ -361,7 +361,7 @@ function App() {
           <div className="container fact-grid reveal">
             <div className="fact-cell"><small>FORMAT</small><strong>IN PERSON</strong><span>Campus build day</span></div>
             <div className="fact-cell"><small>WHEN</small><strong>OCT 10, 2026</strong><span>11:00 AM – 4:00 PM IST</span></div>
-            <div className="fact-cell"><small>WHO</small><strong>ALL LEVELS</strong><span>First-timers welcome</span></div>
+            <div className="fact-cell"><small>WHO</small><strong>UNIVERSITY STUDENTS</strong><span>First-time contributors welcome</span></div>
             <div className="fact-cell"><small>WHERE</small><strong>DDUGU</strong><span>Gorakhpur, UP</span></div>
           </div>
         </section>
@@ -410,7 +410,7 @@ function App() {
             <div className="schedule-intro reveal">
               <div className="eyebrow"><Spark size={13} /> THE DAY, AT A GLANCE</div>
               <h2>Enough structure to move. Enough space to build.</h2>
-              <p>Times below are a planning draft until the final event date is locked. The rhythm is intentional: short talks, long build blocks.</p>
+              <p>The official event schedule combines short technical sessions with a long hands-on build block. The rhythm is intentional: learn, build, share.</p>
             </div>
             <div className="timeline">
               {SCHEDULE.map((item, i) => (
@@ -471,7 +471,7 @@ function App() {
               <h2>The campus becomes the hackspace.</h2>
               <h3>{EVENT.venue}</h3>
               <p>{EVENT.address}</p>
-              <p className="venue-fine">Final room, reporting time, entry-gate instructions, and capacity will appear here before registration opens.</p>
+              <p className="venue-fine">For the latest entry and venue instructions, check the official MLH event page before attending.</p>
               <Button href={EVENT.mapsUrl} variant="cream">Open in Maps <span className="button-icon"><Arrow direction="up-right" /></span></Button>
             </div>
           </div>
@@ -482,7 +482,7 @@ function App() {
             <div className="faq-heading reveal">
               <div className="eyebrow"><Spark size={13} /> BEFORE YOU DM THE ORGANIZER</div>
               <h2>Questions,<br />answered.</h2>
-              <p>If something important is missing here, that probably means we have not locked it yet.</p>
+              <p>For the latest event logistics or updates, check the official MLH event page.</p>
             </div>
             <div className="faq-list reveal">
               {FAQS.map(([q, a], i) => {
@@ -508,7 +508,7 @@ function App() {
             <h2>Hacktoberfest<br /><em>Hack Day × DDUGU</em></h2>
             <p>{EVENT.date} · {EVENT.dateDetail}<br />{EVENT.venue}</p>
             <RegistrationButton status />
-            {!registrationAvailable && <small>The host/registration link will be added here as soon as it is confirmed.</small>}
+            {!registrationAvailable && <small>Registration is currently unavailable from this site.</small>}
           </div>
         </section>
       </main>
@@ -523,7 +523,7 @@ function App() {
         <div className="container footer-grid">
           <div className="footer-brand"><BrandMark /><div><strong>Hacktoberfest × DDUGU</strong><span>Build open. Learn together. Ship something real.</span></div></div>
           <div className="footer-links"><a href="#about">About</a><a href="#schedule">Schedule</a><a href="#venue">Venue</a><a href="#faq">FAQ</a></div>
-          <p>Organized locally by {EVENT.organizer}. Hacktoberfest is a registered trademark of DigitalOcean. Event details remain subject to official confirmation and applicable organizer guidelines.</p>
+          <p>Organized locally by {EVENT.organizer}. Hacktoberfest is a registered trademark of DigitalOcean. Event details are based on the official event listing and may change with organizer updates.</p>
         </div>
       </footer>
 
