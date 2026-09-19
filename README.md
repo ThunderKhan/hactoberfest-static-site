@@ -84,4 +84,4 @@ GitHub Actions runs the same production check on pushes and pull requests to `ma
 
 ## Visual audit
 
-See [the September 2026 visual audit](docs/visual-audit.md) for findings, fixes, validation and remaining work. The mobile menu uses a native dialog; the bottom highlights include a pause toggle. The stylized campus graphic is an illustration, with the Maps link providing external directions.
+See [the September 2026 visual audit](docs/visual-audit.md) for findings, fixes, validation and remaining work. The mobile menu uses a native dialog; the bottom highlights use a compact marquee. The stylized campus graphic is an illustration, with the Maps link providing external directions.
