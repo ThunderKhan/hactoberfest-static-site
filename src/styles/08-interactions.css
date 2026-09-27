@@ -60,44 +60,4 @@
 .hero-pills span { transform: none; will-change: auto; }
 
 /* Signature interactive campus map */
-.location-map-canvas {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(50,64,111,.18), transparent 42%),
-    linear-gradient(145deg, #161b29 0%, #0c1019 52%, #090b11 100%);
-  transform-origin: center;
-}
-.location-map-canvas::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: .42;
-  background:
-    radial-gradient(circle at 22% 25%, rgba(240,198,65,.12) 0 1px, transparent 2px),
-    radial-gradient(circle at 78% 68%, rgba(132,150,215,.20) 0 1px, transparent 2px);
-  background-size: 29px 29px, 41px 41px;
-}
-
-/* Touch/input adaptation */
-@media (pointer: coarse) {
-  .button,
-  .menu-button,
-  .faq-item button,
-  .top-button,
-  .location-map { min-height: 44px; }
-  .desktop-links a,
-  .footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
-}
-
-@media (hover: none) {
-  .interactive-accordion:hover button strong,
-  .button:hover .arrow-icon,
-  .button-ghost:hover .arrow-icon,
-  .button:hover .button-icon { transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .location-map-pin-ring { animation: none; opacity: .45; }
-}
+.location-map-canvas { position: absolute; inset: 0; }

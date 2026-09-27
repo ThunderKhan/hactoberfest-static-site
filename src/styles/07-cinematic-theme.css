@@ -165,16 +165,26 @@ body { background: var(--cinema-bg); color: var(--cream); }
   place-items: center;
   cursor: pointer;
   user-select: none;
+  perspective: 1000px;
+  --map-rotate-x: 0deg;
+  --map-rotate-y: 0deg;
 }
 .location-map:focus-visible .location-map-card { outline: 2px solid var(--cinema-gold); outline-offset: 4px; }
 .location-map-card {
   position: relative;
   overflow: hidden;
+  width: 100%;
   max-width: 700px;
   border-radius: 26px;
   border: 1px solid rgba(255,247,230,.18);
   background: linear-gradient(145deg, rgba(26,31,47,.96), rgba(8,10,17,.98));
   box-shadow: 0 28px 70px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06);
+  transform: translate3d(0,0,0) rotateX(var(--map-rotate-x)) rotateY(var(--map-rotate-y));
+  transform-style: preserve-3d;
+  transition: transform .35s var(--motion-ease);
+}
+.location-map.is-hovered .location-map-card {
+  transform: translate3d(0,-5px,0) rotateX(var(--map-rotate-x)) rotateY(var(--map-rotate-y));
 }
 .location-map-glow {
   position: absolute;
@@ -184,14 +194,24 @@ body { background: var(--cinema-bg); color: var(--cream); }
     radial-gradient(circle at 12% 4%, rgba(240,198,65,.11), transparent 30%),
     radial-gradient(circle at 85% 82%, rgba(70,88,158,.13), transparent 34%);
 }
-.location-map-expanded {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(18,22,34,.45), rgba(7,9,15,.92)),
-    radial-gradient(circle at 50% 46%, rgba(65,76,118,.30), transparent 44%),
-    #12151e;
+.location-map-canvas {
+  transform: scale(1);
+  transition: opacity .35s var(--motion-ease), transform .35s var(--motion-ease);
 }
+.location-map.is-expanded .location-map-canvas {
+  opacity: 1;
+  transform: scale(1.015);
+}
+.location-map-roads line,
+.location-map-roads path {
+  opacity: 0;
+  animation: locationMapRoadIn var(--map-road-duration, .65s) var(--motion-ease) var(--map-delay, 0s) both;
+}
+@keyframes locationMapRoadIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .location-map-roads { position: absolute; inset: 0; width: 100%; height: 100%; }
 .location-map-roads line { vector-effect: non-scaling-stroke; }
 .location-map-roads .road-main { stroke: rgba(255,247,230,.33); stroke-width: 3.5; }
@@ -226,14 +246,19 @@ body { background: var(--cinema-bg); color: var(--cream); }
 .district-b { right: 9%; top: 48%; color: rgba(240,198,65,.44); }
 .district-c { left: 45%; top: 11%; }
 .location-map-pin {
+  --map-pin-y: 0px;
+  --map-pin-scale: 1;
   position: absolute;
   z-index: 5;
   left: 53%;
   top: 46%;
   color: var(--cinema-gold);
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%) translateY(var(--map-pin-y)) scale(var(--map-pin-scale));
   filter: drop-shadow(0 0 18px rgba(240,198,65,.34));
+  transition: transform .35s var(--motion-ease);
 }
+.location-map.is-hovered .location-map-pin { --map-pin-y: -4px; }
+.location-map.is-expanded .location-map-pin { --map-pin-scale: 1.08; }
 .location-map-pin circle { fill: #0a0c12; }
 .location-map-pin-ring {
   position: absolute;
@@ -250,7 +275,20 @@ body { background: var(--cinema-bg); color: var(--cream); }
   0% { opacity: .62; transform: translate(-50%,-50%) scale(.72); }
   75%, 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.72); }
 }
-.map-expanded-details { position: absolute; z-index: 3; inset: 0; pointer-events: none; }
+.map-expanded-details {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .24s var(--motion-ease), visibility 0s linear .24s;
+}
+.map-expanded-details.visible {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
 .map-node {
   position: absolute;
   width: 8px;
@@ -312,8 +350,9 @@ body { background: var(--cinema-bg); color: var(--cream); }
   font: 500 9px/1 var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
-
+  transition: transform .18s var(--motion-ease);
 }
+.location-map.is-hovered .location-map-status { transform: scale(1.04); }
 .location-map-status i {
   width: 7px;
   height: 7px;
@@ -339,9 +378,20 @@ body { background: var(--cinema-bg); color: var(--cream); }
   color: var(--cream);
   font: 500 clamp(24px,3vw,38px)/1.02 var(--serif);
   letter-spacing: -.035em;
+  transition: transform .22s var(--motion-ease);
 }
+.location-map.is-hovered .location-map-bottom h3 { transform: translateX(4px); }
 .location-map-bottom p { display: block; margin: 9px 0 0; color: rgba(255,247,230,.70); font-family: var(--mono); font-weight: 400; }
-.location-map-underline { width: 100%; height: 1px; margin-top: 18px; transform-origin: left; background: linear-gradient(90deg, var(--cinema-gold), rgba(240,198,65,.14), transparent); }
+.location-map-underline {
+  width: 100%;
+  height: 1px;
+  margin-top: 18px;
+  transform: scaleX(.32);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--cinema-gold), rgba(240,198,65,.14), transparent);
+  transition: transform .35s var(--motion-ease);
+}
+.location-map-underline.active { transform: scaleX(1); }
 .location-map-hint {
   position: absolute;
   left: 50%;
@@ -402,4 +452,46 @@ body { background: var(--cinema-bg); color: var(--cream); }
   .location-map-content { padding: 19px; }
   .location-map-bottom h3 { font-size: 27px; }
   .venue-map-wrap { min-height: 410px; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .location-map-card,
+  .location-map-canvas,
+  .location-map-pin,
+  .location-map-status,
+  .location-map-bottom h3,
+  .location-map-underline,
+  .map-expanded-details {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .location-map-card {
+    transform: none !important;
+  }
+
+  .location-map-canvas {
+    opacity: 1;
+    transform: none !important;
+  }
+
+  .location-map-roads line,
+  .location-map-roads path {
+    opacity: 1;
+    animation: none !important;
+  }
+
+  .location-map-pin {
+    transform: translate(-50%,-50%) !important;
+  }
+
+  .location-map-status,
+  .location-map-bottom h3 {
+    transform: none !important;
+  }
+
+  .location-map-underline {
+    transform: scaleX(1);
+  }
 }
