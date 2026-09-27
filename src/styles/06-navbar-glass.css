@@ -98,7 +98,7 @@
   border-color: rgba(255, 213, 41, .28);
   background:
     rgba(4, 9, 34, .42)
-    url("/favicon.png")
+    url("/favicon.svg")
     center / cover
     no-repeat;
   -webkit-backdrop-filter: none;
