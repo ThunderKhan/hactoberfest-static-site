@@ -22,6 +22,7 @@ export function LocationMap({
   const rectRef = useRef<DOMRect | null>(null);
   const frameRef = useRef<number | null>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
+  const finePointerRef = useRef(false);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -61,17 +62,19 @@ export function LocationMap({
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    finePointerRef.current = !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!finePointerRef.current) return;
     rectRef.current = containerRef.current?.getBoundingClientRect() ?? null;
   };
 
   const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (reduceMotion || !rectRef.current || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (reduceMotion || !finePointerRef.current || !rectRef.current) return;
     pointerRef.current = { x: event.clientX, y: event.clientY };
     queueTilt();
   };
 
   const handleMouseLeave = () => {
+    finePointerRef.current = false;
     rectRef.current = null;
     if (frameRef.current !== null) {
       window.cancelAnimationFrame(frameRef.current);
